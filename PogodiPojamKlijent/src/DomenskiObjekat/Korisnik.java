@@ -5,17 +5,17 @@
 package DomenskiObjekat;
 
 import java.io.Serializable;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.List;
+import java.sql.SQLException;
 import java.util.Objects;
 
 /**
  *
  * @author Sreja
  */
-public class Korisnik implements GenerickiDomObj, Serializable{
-    
+public class Korisnik implements GenerickiDomObj, Serializable {
+
+    private static final long serialVersionUID = 1L;
     Long idKorisnik;
     String ime;
     String prezime;
@@ -23,6 +23,11 @@ public class Korisnik implements GenerickiDomObj, Serializable{
     String sifra;
 
     public Korisnik() {
+    }
+
+    public Korisnik(String korisnickoIme, String sifra) {
+        this.korisnickoIme = korisnickoIme;
+        this.sifra = sifra;
     }
 
     public Korisnik(Long idKorisnik, String ime, String prezime, String korisnickoIme, String sifra) {
@@ -101,57 +106,50 @@ public class Korisnik implements GenerickiDomObj, Serializable{
     public String toString() {
         return "Korisnik{" + "idKorisnik=" + idKorisnik + ", ime=" + ime + ", prezime=" + prezime + ", korisnickoIme=" + korisnickoIme + ", sifra=" + sifra + '}';
     }
-    
-    
 
     @Override
     public String getTableName() {
+        return "korisnik";
+    }
+
+    @Override
+    public String getColumnsForInsert() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public List<GenerickiDomObj> getList(ResultSet resultSet) throws Exception {
+    public String getParamsForInsert() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public GenerickiDomObj getResult(ResultSet resultSet) throws Exception {
+    public String setAtrValue() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public String getAttributeNames() {
+    public String getPrimaryKey() {
+        return "korisnicko_ime = '" + korisnickoIme + "' AND sifra = '" + sifra + "'";
+    }
+
+    @Override
+    public String alijas() {
+        return "k";
+    }
+
+    @Override
+    public String join() {
+        return "";
+    }
+
+    @Override
+    public String getWhereCondition() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public String getUnknownValues() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public GenerickiDomObj getNewRecord(ResultSet rs) throws SQLException {
+        return new Korisnik(rs.getLong("id_korisnik"), rs.getString("ime"), rs.getString("prezime"), rs.getString("korisnicko_ime"), rs.getString("sifra"));
     }
 
-    @Override
-    public void prepareStatement(PreparedStatement ps, GenerickiDomObj entity) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public String getUpdateQuery() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public String getID(GenerickiDomObj entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public String getCondition(GenerickiDomObj entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public String getOrderCondition() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
 }

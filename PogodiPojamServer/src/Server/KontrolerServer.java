@@ -4,8 +4,10 @@
  */
 package Server;
 
-import TransferObjekat.ServerResponse;
-import java.io.IOException;
+import DomenskiObjekat.GenerickiDomObj;
+import DomenskiObjekat.Korisnik;
+import SO.PrijaviKorisnika;
+import SO.SystemOperation;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -40,7 +42,7 @@ public class KontrolerServer {
     }
 
     void izvrsiGenerickiKontroler() throws Exception {
-        ss = new ServerSocket(8189);
+        ss = new ServerSocket(9000);
         System.out.println("Server je pokrenut!");
         while (true) {
             Socket soketS = ss.accept();
@@ -49,15 +51,10 @@ public class KontrolerServer {
         }
     }
 
-    public void broadcast(ServerResponse so) {
-        for (Klijent k : lkl) {
-            if (k != null) {
-                try {
-                    k.posaljiOdgovor(so);
-                } catch (IOException ex) {
-                    Logger.getLogger(KontrolerServer.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
+    GenerickiDomObj prijaviKorisnika(Korisnik korisnik) throws Exception {
+        SystemOperation so = new PrijaviKorisnika();
+
+        so.templateExecute(korisnik);
+        return ((PrijaviKorisnika) so).vratiKorisnika();
     }
 }

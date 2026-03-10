@@ -20,7 +20,7 @@ public class DatabaseConnection {
     
     private DatabaseConnection() throws SQLException
     {
-        String url="jdbc:mysql://127.0.0.1:3306/pogodi_pojam";
+        String url="jdbc:mysql://127.0.0.1:3307/pogodi_pojam";
         String dbUser="root";
         String dbPassword="";
         connection=DriverManager.getConnection(url, dbUser, dbPassword);

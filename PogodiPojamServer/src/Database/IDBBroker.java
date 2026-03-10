@@ -5,6 +5,8 @@
 package Database;
 
 import DomenskiObjekat.GenerickiDomObj;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -12,9 +14,10 @@ import java.util.List;
  * @author Sreja
  */
 public interface IDBBroker {
-    List<GenerickiDomObj> selectAll(GenerickiDomObj odo) throws Exception;
-    GenerickiDomObj select(GenerickiDomObj odo,Long id) throws Exception;
-    Long insert(GenerickiDomObj odo) throws Exception;
-    int update(GenerickiDomObj odo) throws Exception;
-    void delete(GenerickiDomObj odo) throws Exception;
+
+    public List<GenerickiDomObj> selectMany(GenerickiDomObj gdo) throws SQLException;
+    public GenerickiDomObj select(GenerickiDomObj gdo) throws SQLException;
+    public PreparedStatement insert(GenerickiDomObj gdo) throws SQLException;
+    public void update(GenerickiDomObj gdo) throws SQLException;
+    public void delete(GenerickiDomObj gdo) throws SQLException;
 }

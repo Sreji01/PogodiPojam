@@ -5,8 +5,8 @@
 package DomenskiObjekat;
 
 import java.io.Serializable;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -15,13 +15,12 @@ import java.util.List;
  */
 public interface GenerickiDomObj extends Serializable{
     public String getTableName();
-    public List<GenerickiDomObj> getList(ResultSet resultSet) throws Exception;
-    public GenerickiDomObj getResult(ResultSet resultSet) throws Exception;
-    public String getAttributeNames();
-    public String getUnknownValues();
-    public void prepareStatement(PreparedStatement ps, GenerickiDomObj entity) throws Exception;
-    public String getUpdateQuery();
-    public String getID(GenerickiDomObj entity);
-    public String getCondition(GenerickiDomObj entity);
-    public String getOrderCondition();
+    public String getColumnsForInsert();
+    public String getParamsForInsert();
+    public String setAtrValue();
+    public String getPrimaryKey();
+    public String alijas();
+    public String join();
+    public String getWhereCondition();
+    public GenerickiDomObj getNewRecord(ResultSet rs) throws SQLException;
 }

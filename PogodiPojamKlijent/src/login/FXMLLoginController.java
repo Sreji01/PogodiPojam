@@ -4,23 +4,43 @@
  */
 package login;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
  *
  * @author Sreja
  */
-public class FXMLLoginController implements Initializable {
+public class FXMLLoginController {
+
+    @FXML
+    public TextField korisnickoIme;
+
+    @FXML
+    public TextField sifra;
+
+    @FXML
+    public Button prijavaBtn;
 
     /**
      * Initializes the controller class.
      */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
+    @FXML
+    public void initialize() throws IllegalArgumentException, NoSuchFieldException, IllegalAccessException {
+        KontrolerGUILogin kngui = new KontrolerGUILogin(this);
+    }
+
+    public Stage stage;
+
+    void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    public void closeStage() {
+        stage.close();
+    }
+
 }

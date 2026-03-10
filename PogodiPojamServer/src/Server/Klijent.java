@@ -1,22 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Server;
 
+import DomenskiObjekat.GenerickiDomObj;
 import DomenskiObjekat.Korisnik;
 import TransferObjekat.ClientRequest;
+import TransferObjekat.Operations;
 import TransferObjekat.ServerResponse;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-/**
- *
- * @author Sreja
- */
-public class Klijent extends Thread{
+public class Klijent extends Thread {
 
     private Socket soketS;
     ObjectOutputStream out;
@@ -26,19 +20,15 @@ public class Klijent extends Thread{
     Korisnik k;
 
     public Klijent(Socket soketS1, int brojKlijenta, KontrolerServer ks) {
-
         soketS = soketS1;
         this.brojKlijenta = brojKlijenta;
         this.server = ks;
-
         System.out.println("Klijent:" + brojKlijenta + " je povezan!");
         start();
-
     }
 
     public void run() {
         try {
-
             out = new ObjectOutputStream(soketS.getOutputStream());
             in = new ObjectInputStream(soketS.getInputStream());
 
@@ -55,16 +45,46 @@ public class Klijent extends Thread{
         }
     }
 
-    private ServerResponse obradiZahtev(ClientRequest kz) throws IOException {
+    private ServerResponse obradiZahtev(ClientRequest kz) throws Exception {
         int operacija = kz.getOperation();
         ServerResponse response = new ServerResponse();
 
         switch (operacija) {
+            case Operations.PRIJAVI_KORISNIKA:
+                Korisnik korisnik = (Korisnik) kz.getData();
+                try {
+                    GenerickiDomObj odo = KontrolerServer.getInstance().prijaviKorisnika(korisnik);
+                    if (odo != null) {
+                        Korisnik kor = (Korisnik) odo;
+                        boolean exists = false;
+                        for (Klijent kn : server.lkl) {
+                            if (kn.getKorisnik() != null && kn.getKorisnik().equals(kor)) {
+                                exists = true;
+                                break;
+                            }
+                        }
+                        if (!exists) {
+                            this.k = kor;
+                            response.setIsSuccess(true);
+                            response.setParameter(odo);
+                        } else {
+                            response.setIsSuccess(false);
+                            response.setE(new Exception("Korisnik je vec ulogovan!"));
+                        }
+                    } else {
+                        response.setIsSuccess(false);
+                        response.setE(new Exception("Pogresno korisnicko ime ili sifra!"));
+                    }
+                } catch (Exception ex) {
+                    response.setIsSuccess(false);
+                    response.setE(ex);
+                }
+                response.setOperation(Operations.PRIJAVI_KORISNIKA);
+                break;
             default:
                 break;
-
         }
-        System.out.println(response.getOperation());
+
         return response;
     }
 
@@ -74,5 +94,9 @@ public class Klijent extends Thread{
 
     public Korisnik getKorisnik() {
         return k;
+    }
+
+    public void setKorisnik(Korisnik k) {
+        this.k = k;
     }
 }

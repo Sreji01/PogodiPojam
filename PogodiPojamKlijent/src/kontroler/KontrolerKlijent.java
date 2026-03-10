@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import TransferObjekat.ClientRequest;
+import TransferObjekat.Operations;
 import TransferObjekat.ServerResponse;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
@@ -18,8 +19,8 @@ import java.util.function.Consumer;
  *
  * @author Sreja
  */
-
 public class KontrolerKlijent {
+
     private static KontrolerKlijent instance;
 
     private Korisnik ulogovaniKor;
@@ -27,16 +28,18 @@ public class KontrolerKlijent {
     private ObjectInputStream in;
     private Socket socket;
     private Thread listenerThread;
-  
+
     private CompletableFuture<ServerResponse> pendingResponse;
 
-    private KontrolerKlijent() {}
+    private KontrolerKlijent() {
+    }
 
-    public static KontrolerKlijent getInstance() {
+    public static KontrolerKlijent getInstance() throws IOException {
         if (instance == null) {
             instance = new KontrolerKlijent();
+            Socket socket = new Socket("127.0.0.1", 9000);
+            instance.initStreams(socket);
         }
-        
         return instance;
     }
 
@@ -70,31 +73,43 @@ public class KontrolerKlijent {
         listenerThread.start();
     }
 
-private Consumer<ServerResponse> asyncListener;
+    private Consumer<ServerResponse> asyncListener;
 
-public void setAsyncListener(Consumer<ServerResponse> listener) {
-    this.asyncListener = listener;
-}
-
+    public void setAsyncListener(Consumer<ServerResponse> listener) {
+        this.asyncListener = listener;
+    }
 
     private void handleAsyncResponse(ServerResponse so) {
-    
-         if (asyncListener != null) {
-        asyncListener.accept(so);
-    }
-        
+
+        if (asyncListener != null) {
+            asyncListener.accept(so);
+        }
+
         switch (so.getOperation()) {
             default:
-                
+
         }
     }
 
-    
     private ServerResponse sendRequest(ClientRequest req) throws Exception {
         pendingResponse = new CompletableFuture<>();
         out.writeObject(req);
         out.flush();
-        return pendingResponse.get(); 
+        return pendingResponse.get();
     }
-  
+
+    public Korisnik prijaviKorisnika(String korisnickoIme, String sifra) throws Exception {
+        ClientRequest req = new ClientRequest();
+        req.setOperation(Operations.PRIJAVI_KORISNIKA);
+        req.setData(new Korisnik(korisnickoIme, sifra));
+
+        ServerResponse so = sendRequest(req);
+        if (so.isIsSuccess()) {
+            ulogovaniKor = (Korisnik) so.getParameter();
+            return ulogovaniKor;
+        } else {
+            throw so.getE();
+        }
+    }
+
 }

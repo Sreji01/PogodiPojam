@@ -4,11 +4,13 @@
  */
 package TransferObjekat;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Sreja
  */
-public class ServerResponse {
+public class ServerResponse implements Serializable{
     
     private int operation;
     private Object parameter;

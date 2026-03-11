@@ -5,19 +5,18 @@
 package DomenskiObjekat;
 
 import java.io.Serializable;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 
 /**
  *
  * @author Sreja
  */
-public class Partija implements GenerickiDomObj, Serializable{
-    
+public class Partija implements GenerickiDomObj, Serializable {
+
+    private static final long serialVersionUID = 1L;
     Long idPartija;
     LocalDateTime vremePocetka;
     LocalDateTime vremeZavrsetka;
@@ -103,17 +102,17 @@ public class Partija implements GenerickiDomObj, Serializable{
 
     @Override
     public String getTableName() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "partija";
     }
-    
+
     @Override
     public String getColumnsForInsert() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "vreme_pocetka, id_korisnik";
     }
 
     @Override
     public String getParamsForInsert() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "'" + vremePocetka + "', " + korisnik.getIdKorisnik() + "";
     }
 
     @Override
@@ -145,5 +144,5 @@ public class Partija implements GenerickiDomObj, Serializable{
     public GenerickiDomObj getNewRecord(ResultSet rs) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
 }

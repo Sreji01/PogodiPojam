@@ -5,24 +5,23 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="glavnaforma.FXMLGlavnaFormaController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="glavnaforma.FXMLGlavnaFormaController">
    <children>
       <MenuBar layoutY="1.0">
         <menus>
-          <Menu mnemonicParsing="false" text="Zapocni igru">
+          <Menu fx:id="igra" mnemonicParsing="false" text="Igra">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem fx:id="zapocniIgru" mnemonicParsing="false" text="Zapocni igru" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Rezultati">
+          <Menu fx:id="rezultati" mnemonicParsing="false" text="Rezultati">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+              <MenuItem fx:id="pogledajRangListu" mnemonicParsing="false" text="Pogledaj rang listu" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Izlaz">
+          <Menu fx:id="izlaz" mnemonicParsing="false" text="Izlaz">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem fx:id="izlazIzIgre" mnemonicParsing="false" text="Izlaz iz igre" />
             </items>
           </Menu>
         </menus>

@@ -4,6 +4,7 @@
  */
 package glavnaforma;
 
+import DomenskiObjekat.Korisnik;
 import java.net.URL;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -18,10 +19,10 @@ import javafx.stage.Stage;
 public class JFXGlavnaForma extends Application{
 
     FXMLGlavnaFormaController controller;
-    private String korisnickoIme;
+    private Korisnik korisnik;
 
-    public void setKorisnickoIme(String ime) {
-        this.korisnickoIme = ime;
+    public void setKorisnik(Korisnik korisnik) {
+        this.korisnik = korisnik;
     }
 
     @Override
@@ -41,7 +42,7 @@ public class JFXGlavnaForma extends Application{
         Scene scene = new Scene(root);
         scene.getStylesheets().add("CSS/stylesheet.css");
         stage.setScene(scene);
-        stage.setTitle("Ulogovani korisnik: " + korisnickoIme);
+        stage.setTitle("Ulogovani korisnik: " + korisnik.getKorisnickoIme());
         stage.show();
 
     }

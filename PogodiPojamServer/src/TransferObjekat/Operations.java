@@ -9,5 +9,8 @@ package TransferObjekat;
  * @author Sreja
  */
 public class Operations {
+
     public static final int PRIJAVI_KORISNIKA = 1;
+    public static final int KREIRAJ_PARTIJU = 2;
+
 }

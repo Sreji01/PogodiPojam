@@ -2,6 +2,7 @@ package Server;
 
 import DomenskiObjekat.GenerickiDomObj;
 import DomenskiObjekat.Korisnik;
+import DomenskiObjekat.Partija;
 import TransferObjekat.ClientRequest;
 import TransferObjekat.Operations;
 import TransferObjekat.ServerResponse;
@@ -9,6 +10,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Klijent extends Thread {
 
@@ -53,20 +56,18 @@ public class Klijent extends Thread {
             case Operations.PRIJAVI_KORISNIKA:
                 Korisnik korisnik = (Korisnik) kz.getData();
                 try {
-                    GenerickiDomObj odo = KontrolerServer.getInstance().prijaviKorisnika(korisnik);
-                    if (odo != null) {
-                        Korisnik kor = (Korisnik) odo;
+                    korisnik = KontrolerServer.getInstance().prijaviKorisnika(korisnik);
+                    if (korisnik != null) {
                         boolean exists = false;
                         for (Klijent kn : server.lkl) {
-                            if (kn.getKorisnik() != null && kn.getKorisnik().equals(kor)) {
+                            if (kn.getKorisnik() != null && kn.getKorisnik().equals(korisnik)) {
                                 exists = true;
                                 break;
                             }
                         }
                         if (!exists) {
-                            this.k = kor;
                             response.setIsSuccess(true);
-                            response.setParameter(odo);
+                            response.setParameter(korisnik);
                         } else {
                             response.setIsSuccess(false);
                             response.setE(new Exception("Korisnik je vec ulogovan!"));
@@ -80,6 +81,29 @@ public class Klijent extends Thread {
                     response.setE(ex);
                 }
                 response.setOperation(Operations.PRIJAVI_KORISNIKA);
+                break;
+            case Operations.KREIRAJ_PARTIJU:
+                Partija partija = (Partija) kz.getData();
+                try {
+                    partija = KontrolerServer.getInstance().kreirajPartiju(partija);
+                    if (partija != null) {
+                        response.setIsSuccess(true);
+                        response.setParameter(partija);
+                        response.setOperation(Operations.KREIRAJ_PARTIJU);
+
+                    } else {
+                        response.setIsSuccess(false);
+                        response.setParameter(partija);
+                        response.setOperation(Operations.KREIRAJ_PARTIJU);
+                    }
+
+                } catch (Exception ex) {
+                    Logger.getLogger(Klijent.class.getName()).log(Level.SEVERE, null, ex);
+                    response.setIsSuccess(false);
+                    response.setOperation(Operations.KREIRAJ_PARTIJU);
+                    response.setE(ex);
+                }
+                posaljiOdgovor(response);
                 break;
             default:
                 break;

@@ -6,6 +6,8 @@ package Server;
 
 import DomenskiObjekat.GenerickiDomObj;
 import DomenskiObjekat.Korisnik;
+import DomenskiObjekat.Partija;
+import SO.KreirajPartiju;
 import SO.PrijaviKorisnika;
 import SO.SystemOperation;
 import java.net.ServerSocket;
@@ -51,10 +53,16 @@ public class KontrolerServer {
         }
     }
 
-    GenerickiDomObj prijaviKorisnika(Korisnik korisnik) throws Exception {
+    Korisnik prijaviKorisnika(Korisnik korisnik) throws Exception {
         SystemOperation so = new PrijaviKorisnika();
 
         so.templateExecute(korisnik);
         return ((PrijaviKorisnika) so).vratiKorisnika();
+    }
+
+    Partija kreirajPartiju(Partija partija) throws Exception {
+        SystemOperation so = new KreirajPartiju();
+        so.templateExecute(partija);
+        return ((KreirajPartiju) so).vratiPartiju();
     }
 }

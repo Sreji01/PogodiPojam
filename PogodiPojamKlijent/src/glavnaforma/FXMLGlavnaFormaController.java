@@ -4,9 +4,9 @@
  */
 package glavnaforma;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
+import javafx.fxml.FXML;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 
 /**
@@ -14,14 +14,29 @@ import javafx.stage.Stage;
  *
  * @author Sreja
  */
-public class FXMLGlavnaFormaController implements Initializable {
+public class FXMLGlavnaFormaController {
 
+    @FXML
+    public Menu igra; 
+    @FXML
+    public Menu rezultati;
+    @FXML
+    public Menu izlaz;
+                
+              
+    @FXML
+    public MenuItem zapocniIgru;
+    @FXML
+    public MenuItem pogledajRangListu;
+    @FXML
+    public MenuItem izlazIzIgre;
+    
     /**
      * Initializes the controller class.
      */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+    @FXML
+    public void initialize() {
+        KointrolerGuiGlavnaForma kngui = new KointrolerGuiGlavnaForma(this);
     }    
     
     public Stage stage;

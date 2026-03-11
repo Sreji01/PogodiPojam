@@ -32,23 +32,31 @@ public class KontrolerGUILogin {
     }
 
     public void prijaviKorisnika(String korisnickoIme, String sifra) {
-        try {
+    try {
+        Korisnik korisnik = KontrolerKlijent.getInstance().prijaviKorisnika(korisnickoIme, sifra);
 
-            Korisnik korisnik = KontrolerKlijent.getInstance().prijaviKorisnika(korisnickoIme, sifra);
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.setTitle("Uspešna prijava");
+        info.setHeaderText(null);
+        info.setContentText("Korisnik je uspešno prijavljen!");
+        info.showAndWait();
 
-            glavnaforma.JFXGlavnaForma glavnaForma;
+        glavnaforma.JFXGlavnaForma glavnaForma = new glavnaforma.JFXGlavnaForma();
+        Stage s = new Stage();
+        glavnaForma.setKorisnik(korisnik);
+        glavnaForma.start(s);
 
-            Stage s;
-            glavnaForma = new glavnaforma.JFXGlavnaForma();
-            s = new Stage();
-            glavnaForma.setKorisnickoIme(korisnik.getKorisnickoIme());
-            glavnaForma.start(s);
+        this.fxcon.closeStage();
 
-            this.fxcon.closeStage();
-        } catch (Exception ex) {
-            poruka("Korisnik sa ovim kredencijalima ne postoji u sistemu ili je vec ulogovan");
-            ex.printStackTrace();
-        }
+    } catch (Exception ex) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Greška pri prijavi");
+        alert.setHeaderText(null);
+        alert.setContentText("Korisnik sa ovim kredencijalima ne postoji ili je već ulogovan.");
+        alert.showAndWait();
+
+        ex.printStackTrace();
     }
+}
 
 }

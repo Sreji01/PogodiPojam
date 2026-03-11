@@ -5,6 +5,7 @@
 package kontroler;
 
 import DomenskiObjekat.Korisnik;
+import DomenskiObjekat.Partija;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -23,13 +24,20 @@ public class KontrolerKlijent {
 
     private static KontrolerKlijent instance;
 
-    private Korisnik ulogovaniKor;
+    private Korisnik prijavljeniKorisnik;
     private ObjectOutputStream out;
     private ObjectInputStream in;
     private Socket socket;
     private Thread listenerThread;
-
     private CompletableFuture<ServerResponse> pendingResponse;
+
+    public Korisnik getPrijavljeniKorisnik() {
+        return prijavljeniKorisnik;
+    }
+
+    public void setPrijavljeniKorisnik(Korisnik prijavljeniKorisnik) {
+        this.prijavljeniKorisnik = prijavljeniKorisnik;
+    }
 
     private KontrolerKlijent() {
     }
@@ -105,8 +113,22 @@ public class KontrolerKlijent {
 
         ServerResponse so = sendRequest(req);
         if (so.isIsSuccess()) {
-            ulogovaniKor = (Korisnik) so.getParameter();
-            return ulogovaniKor;
+            prijavljeniKorisnik = (Korisnik) so.getParameter();
+            return prijavljeniKorisnik;
+        } else {
+            throw so.getE();
+        }
+    }
+
+    public Partija kreirajPartiju(Partija partija) throws Exception {
+        partija.setKorisnik(prijavljeniKorisnik);
+        ClientRequest req = new ClientRequest();
+        req.setOperation(Operations.KREIRAJ_PARTIJU);
+        req.setData(partija);
+
+        ServerResponse so = sendRequest(req);
+        if (so.isIsSuccess()) {
+            return (Partija) so.getParameter();
         } else {
             throw so.getE();
         }

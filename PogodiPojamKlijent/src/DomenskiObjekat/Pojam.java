@@ -5,18 +5,16 @@
 package DomenskiObjekat;
 
 import java.io.Serializable;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Objects;
 
 /**
  *
  * @author Sreja
  */
-public class Pojam implements GenerickiDomObj, Serializable{
-    
+public class Pojam implements GenerickiDomObj, Serializable {
+
     Long idPojam;
     String kategorija;
     String naziv;
@@ -98,7 +96,7 @@ public class Pojam implements GenerickiDomObj, Serializable{
 
     @Override
     public String getTableName() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "pojam";
     }
 
     @Override
@@ -123,22 +121,31 @@ public class Pojam implements GenerickiDomObj, Serializable{
 
     @Override
     public String alijas() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "po";
     }
 
     @Override
     public String join() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
     public String getWhereCondition() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (kategorija.equals("Sve")) {
+            return "ORDER BY RAND()";
+        } else {
+            return "WHERE kategorija = '" + kategorija + "' ORDER BY RAND()";
+        }
     }
 
     @Override
     public GenerickiDomObj getNewRecord(ResultSet rs) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        byte[] slika = null;
+        java.sql.Blob blob = rs.getBlob("slika");
+        if (blob != null) {
+            slika = blob.getBytes(1, (int) blob.length());
+        }
+        return new Pojam(rs.getLong("id_pojam"), rs.getString("kategorija"), rs.getString("naziv"), slika);
     }
-    
+
 }

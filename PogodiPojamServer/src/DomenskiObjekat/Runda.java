@@ -17,6 +17,7 @@ import java.util.Objects;
  */
 public class Runda implements GenerickiDomObj, Serializable{
     
+    Partija partija;
     Long idRunda;
     String tacanOdgovor;
     int brojPokusaja;
@@ -26,12 +27,21 @@ public class Runda implements GenerickiDomObj, Serializable{
     public Runda() {
     }
 
-    public Runda(Long idRunda, String tacanOdgovor, int brojPokusaja, boolean pogodjeno, Pojam pojam) {
+    public Runda(Partija partija, Long idRunda, String tacanOdgovor, int brojPokusaja, boolean pogodjeno, Pojam pojam) {
+        this.partija = partija;
         this.idRunda = idRunda;
         this.tacanOdgovor = tacanOdgovor;
         this.brojPokusaja = brojPokusaja;
         this.pogodjeno = pogodjeno;
         this.pojam = pojam;
+    }
+
+    public Partija getPartija() {
+        return partija;
+    }
+
+    public void setPartija(Partija partija) {
+        this.partija = partija;
     }
 
     public Long getIdRunda() {
@@ -92,7 +102,7 @@ public class Runda implements GenerickiDomObj, Serializable{
             return false;
         }
         final Runda other = (Runda) obj;
-        if (!Objects.equals(this.tacanOdgovor, other.tacanOdgovor)) {
+        if (!Objects.equals(this.partija, other.partija)) {
             return false;
         }
         return Objects.equals(this.idRunda, other.idRunda);
@@ -100,22 +110,22 @@ public class Runda implements GenerickiDomObj, Serializable{
 
     @Override
     public String toString() {
-        return "Runda{" + "idRunda=" + idRunda + ", tacanOdgovor=" + tacanOdgovor + ", brojPokusaja=" + brojPokusaja + ", pogodjeno=" + pogodjeno + ", pojam=" + pojam + '}';
+        return "Runda{" + "partija=" + partija + ", idRunda=" + idRunda + ", tacanOdgovor=" + tacanOdgovor + ", brojPokusaja=" + brojPokusaja + ", pogodjeno=" + pogodjeno + ", pojam=" + pojam + '}';
     }
 
     @Override
     public String getTableName() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "runda";
     }
 
     @Override
     public String getColumnsForInsert() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "id_partija, id_pojam";
     }
 
     @Override
     public String getParamsForInsert() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return partija.getIdPartija() + ", " + pojam.getIdPojam();
     }
 
     @Override

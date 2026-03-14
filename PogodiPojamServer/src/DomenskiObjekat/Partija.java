@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -18,18 +19,27 @@ public class Partija implements GenerickiDomObj, Serializable {
 
     private static final long serialVersionUID = 1L;
     Long idPartija;
+    String nazivPartije;
     LocalDateTime vremePocetka;
     LocalDateTime vremeZavrsetka;
+    String odabranaKategorija;
+    int brojRundi;
+    String status;
     Korisnik korisnik;
     Rezultat rezultat;
+    List<Runda> runde;
 
     public Partija() {
     }
 
-    public Partija(Long idPartija, LocalDateTime vremePocetka, LocalDateTime vremeZavrsetka, Korisnik korisnik, Rezultat rezultat) {
+    public Partija(Long idPartija, String nazivPartije, LocalDateTime vremePocetka, LocalDateTime vremeZavrsetka, String odabranaKategorija, int brojRundi, String status, Korisnik korisnik, Rezultat rezultat) {
         this.idPartija = idPartija;
+        this.nazivPartije = nazivPartije;
         this.vremePocetka = vremePocetka;
         this.vremeZavrsetka = vremeZavrsetka;
+        this.odabranaKategorija = odabranaKategorija;
+        this.brojRundi = brojRundi;
+        this.status = status;
         this.korisnik = korisnik;
         this.rezultat = rezultat;
     }
@@ -40,6 +50,14 @@ public class Partija implements GenerickiDomObj, Serializable {
 
     public void setIdPartija(Long idPartija) {
         this.idPartija = idPartija;
+    }
+
+    public String getNazivPartije() {
+        return nazivPartije;
+    }
+
+    public void setNazivPartije(String nazivPartije) {
+        this.nazivPartije = nazivPartije;
     }
 
     public LocalDateTime getVremePocetka() {
@@ -58,6 +76,30 @@ public class Partija implements GenerickiDomObj, Serializable {
         this.vremeZavrsetka = vremeZavrsetka;
     }
 
+    public String getOdabranaKategorija() {
+        return odabranaKategorija;
+    }
+
+    public void setOdabranaKategorija(String odabranaKategorija) {
+        this.odabranaKategorija = odabranaKategorija;
+    }
+
+    public int getBrojRundi() {
+        return brojRundi;
+    }
+
+    public void setBrojRundi(int brojRundi) {
+        this.brojRundi = brojRundi;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public Korisnik getKorisnik() {
         return korisnik;
     }
@@ -72,6 +114,14 @@ public class Partija implements GenerickiDomObj, Serializable {
 
     public void setRezultat(Rezultat rezultat) {
         this.rezultat = rezultat;
+    }
+
+    public List<Runda> getRunde() {
+        return runde;
+    }
+
+    public void setRunde(List<Runda> runde) {
+        this.runde = runde;
     }
 
     @Override
@@ -107,12 +157,12 @@ public class Partija implements GenerickiDomObj, Serializable {
 
     @Override
     public String getColumnsForInsert() {
-        return "vreme_pocetka, id_korisnik";
+        return "naziv_partije, broj_rundi, odabrana_kategorija, status, id_korisnik";
     }
 
     @Override
     public String getParamsForInsert() {
-        return "'" + vremePocetka + "', " + korisnik.getIdKorisnik() + "";
+        return "'" + nazivPartije + "', " + brojRundi + ", '" + odabranaKategorija + "', " + "'" + status + "', " + korisnik.idKorisnik;
     }
 
     @Override
@@ -127,7 +177,7 @@ public class Partija implements GenerickiDomObj, Serializable {
 
     @Override
     public String alijas() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "pa";
     }
 
     @Override
@@ -144,5 +194,4 @@ public class Partija implements GenerickiDomObj, Serializable {
     public GenerickiDomObj getNewRecord(ResultSet rs) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
 }

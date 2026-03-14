@@ -121,7 +121,6 @@ public class KontrolerKlijent {
     }
 
     public Partija kreirajPartiju(Partija partija) throws Exception {
-        partija.setKorisnik(prijavljeniKorisnik);
         ClientRequest req = new ClientRequest();
         req.setOperation(Operations.KREIRAJ_PARTIJU);
         req.setData(partija);

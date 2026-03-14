@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 
@@ -42,6 +43,14 @@ public class Partija implements GenerickiDomObj, Serializable {
         this.status = status;
         this.korisnik = korisnik;
         this.rezultat = rezultat;
+    }
+
+    public Partija(Long idPartija, String nazivPartije, String odabranaKategorija, int brojRundi, String status) {
+        this.idPartija = idPartija;
+        this.nazivPartije = nazivPartije;
+        this.odabranaKategorija = odabranaKategorija;
+        this.brojRundi = brojRundi;
+        this.status = status;
     }
 
     public Long getIdPartija() {
@@ -167,12 +176,13 @@ public class Partija implements GenerickiDomObj, Serializable {
 
     @Override
     public String setAtrValue() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return "vreme_pocetka = '" + java.time.LocalDateTime.now().format(formatter) + "'";
     }
 
     @Override
     public String getPrimaryKey() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "id_partija = " + idPartija;
     }
 
     @Override
@@ -182,17 +192,29 @@ public class Partija implements GenerickiDomObj, Serializable {
 
     @Override
     public String join() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (odabranaKategorija != null && brojRundi != 0 && status != null) {
+            return "JOIN korisnik k ON pa.id_korisnik = k.id_korisnik";
+        }
+        return "";
     }
 
     @Override
     public String getWhereCondition() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "WHERE id_korisnik = " + korisnik.getIdKorisnik();
     }
 
     @Override
     public GenerickiDomObj getNewRecord(ResultSet rs) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (odabranaKategorija != null && brojRundi != 0 && status != null) {
+            LocalDateTime pocetak = rs.getTimestamp("pa.vreme_pocetka") != null
+                    ? rs.getTimestamp("pa.vreme_pocetka").toLocalDateTime()
+                    : null;
+            LocalDateTime kraj = rs.getTimestamp("pa.vreme_zavrsetka") != null
+                    ? rs.getTimestamp("pa.vreme_zavrsetka").toLocalDateTime()
+                    : null;
+            return new Partija(rs.getLong("pa.id_korisnik"), rs.getString("pa.naziv_partije"), pocetak, kraj, rs.getString("pa.odabrana_kategorija"), rs.getInt("pa.broj_rundi"), rs.getString("pa.status"),
+                    new Korisnik(rs.getLong("k.id_korisnik"), rs.getString("k.ime"), rs.getString("k.prezime"), rs.getString("k.korisnicko_ime"), rs.getString("k.sifra")), null);
+        }
+        return new Partija(rs.getLong("id_korisnik"), rs.getString("naziv_partije"), rs.getString("odabrana_kategorija"), rs.getInt("broj_rundi"), rs.getString("status"));
     }
-
 }

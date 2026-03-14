@@ -19,6 +19,7 @@ import java.util.List;
  */
 public class DatabaseBroker implements IDBBroker{
     
+    @Override
     public List<GenerickiDomObj> selectMany(GenerickiDomObj gdo) throws SQLException {
         List<GenerickiDomObj> ls = new ArrayList<>();
         String upit = "SELECT * FROM " + gdo.getTableName() + " " + gdo.alijas() + " " + gdo.join() + " " + gdo.getWhereCondition();
@@ -31,6 +32,7 @@ public class DatabaseBroker implements IDBBroker{
         return ls;
     }
     
+    @Override
     public GenerickiDomObj select(GenerickiDomObj gdo) throws SQLException {
         String upit = "SELECT * FROM " + gdo.getTableName() + " " + gdo.alijas() + " " + gdo.join() + " WHERE " + gdo.getPrimaryKey();
         System.out.println(upit);
@@ -42,6 +44,7 @@ public class DatabaseBroker implements IDBBroker{
         return gdo;
     }
 
+    @Override
     public PreparedStatement insert(GenerickiDomObj gdo) throws SQLException {
         String upit = "INSERT INTO " + gdo.getTableName() + " (" + gdo.getColumnsForInsert() + ") VALUES (" + gdo.getParamsForInsert() + ")";
         System.out.println(upit);
@@ -50,6 +53,7 @@ public class DatabaseBroker implements IDBBroker{
         return ps;
     }
     
+    @Override
     public void update(GenerickiDomObj gdo) throws SQLException {
         String upit = "UPDATE " + gdo.getTableName() + " SET " + gdo.setAtrValue() + " WHERE " + gdo.getPrimaryKey();
         System.out.println(upit);
@@ -57,6 +61,7 @@ public class DatabaseBroker implements IDBBroker{
         ps.executeUpdate();
     }
 
+    @Override
     public void delete(GenerickiDomObj gdo) throws SQLException{
         String upit = "DELETE FROM " +gdo.getTableName() + " WHERE " +gdo.getPrimaryKey();
         System.out.println(upit);

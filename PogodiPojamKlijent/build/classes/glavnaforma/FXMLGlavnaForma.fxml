@@ -11,7 +11,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="glavnaforma.FXMLGlavnaFormaController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="626.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="glavnaforma.FXMLGlavnaFormaController">
    <children>
       <MenuBar layoutY="1.0">
         <menus>
@@ -27,17 +27,19 @@
           </Menu>
         </menus>
       </MenuBar>
-      <TableView fx:id="partije" layoutX="119.0" layoutY="158.0" prefHeight="200.0" prefWidth="323.0">
+      <TableView fx:id="partije" layoutX="42.0" layoutY="158.0" prefHeight="200.0" prefWidth="405.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn fx:id="colNaziv" prefWidth="100.0" text="Naziv" />
+          <TableColumn fx:id="colKategorija" prefWidth="100.0" text="Kategorija" />
+          <TableColumn fx:id="colBrojRundi" prefWidth="100.0" text="Broj rundi" />
+          <TableColumn fx:id="colStatus" prefWidth="100.0" text="Status" />
         </columns>
       </TableView>
-      <ComboBox fx:id="kategorije" layoutX="232.0" layoutY="51.0" prefWidth="150.0" />
-      <Label layoutX="159.0" layoutY="55.0" text="Kategorija:" />
-      <Label layoutX="159.0" layoutY="106.0" text="Broj rundi:" />
-      <TextField fx:id="brojRundi" layoutX="232.0" layoutY="102.0" />
+      <ComboBox fx:id="kategorije" layoutX="193.0" layoutY="51.0" prefWidth="150.0" />
+      <Label layoutX="92.0" layoutY="55.0" text="Kategorija:" />
+      <Label layoutX="92.0" layoutY="106.0" text="Broj rundi:" />
+      <TextField fx:id="brojRundi" layoutX="193.0" layoutY="102.0" />
       <Button fx:id="kreirajPartijuBtn" layoutX="413.0" layoutY="77.0" mnemonicParsing="false" text="Kreiraj partiju" />
-      <Button fx:id="zapocniPartijuBtn" layoutX="469.0" layoutY="232.0" mnemonicParsing="false" text="Zapocni partiju" />
+      <Button fx:id="zapocniPartijuBtn" layoutX="482.0" layoutY="232.0" mnemonicParsing="false" text="Zapocni partiju" />
    </children>
 </AnchorPane>

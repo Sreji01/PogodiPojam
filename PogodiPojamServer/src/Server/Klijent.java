@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -82,6 +83,21 @@ public class Klijent extends Thread {
                 }
                 response.setOperation(Operations.PRIJAVI_KORISNIKA);
                 break;
+            case Operations.UCITAJ_PARTIJE:
+                Partija partijaZaUcitavanje = (Partija) kz.getData();
+                try {
+                    List<Partija> partije = KontrolerServer.getInstance().ucitajPartije(partijaZaUcitavanje);
+                    response.setIsSuccess(true);
+                    response.setParameter(partije);
+                    response.setOperation(Operations.UCITAJ_PARTIJE);
+                } catch (Exception ex) {
+                    Logger.getLogger(Klijent.class.getName()).log(Level.SEVERE, null, ex);
+                    response.setIsSuccess(false);
+                    response.setOperation(Operations.UCITAJ_PARTIJE);
+                    response.setE(ex);
+                }
+                break;
+
             case Operations.KREIRAJ_PARTIJU:
                 Partija partija = (Partija) kz.getData();
                 try {
@@ -105,6 +121,21 @@ public class Klijent extends Thread {
                 }
                 posaljiOdgovor(response);
                 break;
+            case Operations.ZAPOCNI_PARTIJU:
+                Partija partijaZaStart = (Partija) kz.getData();
+                try {
+                    partijaZaStart = KontrolerServer.getInstance().zapocniPartiju(partijaZaStart);
+                    response.setIsSuccess(true);
+                    response.setParameter(partijaZaStart);
+                    response.setOperation(Operations.ZAPOCNI_PARTIJU);
+                } catch (Exception ex) {
+                    Logger.getLogger(Klijent.class.getName()).log(Level.SEVERE, null, ex);
+                    response.setIsSuccess(false);
+                    response.setOperation(Operations.ZAPOCNI_PARTIJU);
+                    response.setE(ex);
+                }
+                break;
+
             default:
                 break;
         }

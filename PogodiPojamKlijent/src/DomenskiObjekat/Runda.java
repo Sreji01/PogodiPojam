@@ -5,18 +5,17 @@
 package DomenskiObjekat;
 
 import java.io.Serializable;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
  *
  * @author Sreja
  */
-public class Runda implements GenerickiDomObj, Serializable{
-    
+public class Runda implements GenerickiDomObj, Serializable {
+
     Partija partija;
     Long idRunda;
     String tacanOdgovor;
@@ -140,22 +139,34 @@ public class Runda implements GenerickiDomObj, Serializable{
 
     @Override
     public String alijas() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "r";
     }
 
     @Override
     public String join() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "join partija pa on r.id_partija = pa.id_partija join korisnik k on pa.id_korisnik = k.id_korisnik JOIN pojam p on r.id_pojam = p.id_pojam";
     }
 
     @Override
     public String getWhereCondition() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
     public GenerickiDomObj getNewRecord(ResultSet rs) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        byte[] slika = null;
+        java.sql.Blob blob = rs.getBlob("p.slika");
+        if (blob != null) {
+            slika = blob.getBytes(1, (int) blob.length());
+        }
+        LocalDateTime pocetak = rs.getTimestamp("pa.vreme_pocetka") != null
+                ? rs.getTimestamp("pa.vreme_pocetka").toLocalDateTime()
+                : null;
+        LocalDateTime kraj = rs.getTimestamp("pa.vreme_zavrsetka") != null
+                ? rs.getTimestamp("pa.vreme_zavrsetka").toLocalDateTime()
+                : null;
+        return new Runda(new Partija(rs.getLong("pa.id_korisnik"), rs.getString("pa.naziv_partije"), pocetak, kraj, rs.getString("pa.odabrana_kategorija"), rs.getInt("pa.broj_rundi"), rs.getString("pa.status"),
+                new Korisnik(rs.getLong("k.id_korisnik"), rs.getString("k.ime"), rs.getString("k.prezime"), rs.getString("k.korisnicko_ime"), rs.getString("k.sifra")), null), rs.getLong("r.id_runda"), rs.getString("r.tacan_odgovor"), rs.getInt("r.broj_pokusaja"), rs.getBoolean("r.pogodjeno"), new Pojam(rs.getLong("p.id_pojam"), rs.getString("p.kategorija"), rs.getString("p.naziv"), slika));
     }
-    
+
 }

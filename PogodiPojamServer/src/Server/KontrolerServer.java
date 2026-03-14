@@ -10,6 +10,8 @@ import DomenskiObjekat.Partija;
 import SO.KreirajPartiju;
 import SO.PrijaviKorisnika;
 import SO.SystemOperation;
+import SO.UcitajPartije;
+import SO.ZapocniPartiju;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -60,9 +62,23 @@ public class KontrolerServer {
         return ((PrijaviKorisnika) so).vratiKorisnika();
     }
 
+    List<Partija> ucitajPartije(Partija partija) throws Exception {
+        SystemOperation so = new UcitajPartije();
+
+        so.templateExecute(partija);
+        return ((UcitajPartije) so).vratiPartije();
+    }
+
     Partija kreirajPartiju(Partija partija) throws Exception {
         SystemOperation so = new KreirajPartiju();
         so.templateExecute(partija);
         return ((KreirajPartiju) so).vratiPartiju();
+    }
+
+    Partija zapocniPartiju(Partija partija) throws Exception {
+        SystemOperation so = new ZapocniPartiju();
+        so.templateExecute(partija);
+        return ((ZapocniPartiju) so).vratiPartiju();
+
     }
 }

@@ -13,6 +13,7 @@ import java.net.Socket;
 import TransferObjekat.ClientRequest;
 import TransferObjekat.Operations;
 import TransferObjekat.ServerResponse;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
@@ -120,6 +121,19 @@ public class KontrolerKlijent {
         }
     }
 
+    public List<Partija> ucitajPartije(Partija partija) throws Exception {
+        ClientRequest req = new ClientRequest();
+        req.setOperation(Operations.UCITAJ_PARTIJE);
+        req.setData(partija);
+
+        ServerResponse so = sendRequest(req);
+        if (so.isIsSuccess()) {
+            return (List<Partija>) so.getParameter();
+        } else {
+            throw so.getE();
+        }
+    }
+
     public Partija kreirajPartiju(Partija partija) throws Exception {
         ClientRequest req = new ClientRequest();
         req.setOperation(Operations.KREIRAJ_PARTIJU);
@@ -133,4 +147,16 @@ public class KontrolerKlijent {
         }
     }
 
+    public Partija zapocniPartiju(Partija partija) throws Exception {
+        ClientRequest req = new ClientRequest();
+        req.setOperation(Operations.ZAPOCNI_PARTIJU);
+        req.setData(partija);
+
+        ServerResponse so = sendRequest(req);
+        if (so.isIsSuccess()) {
+            return (Partija) so.getParameter();
+        } else {
+            throw so.getE();
+        }
+    }
 }

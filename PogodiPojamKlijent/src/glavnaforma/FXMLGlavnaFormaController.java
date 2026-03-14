@@ -13,6 +13,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 /**
@@ -45,24 +46,34 @@ public class FXMLGlavnaFormaController {
 
     @FXML
     private TableView<Partija> partije;
-
     @FXML
-    private TableColumn<Partija, String> colVremePocetka;
-
+    private TableColumn<Partija, String> colNaziv;
     @FXML
-    private TableColumn<Partija, String> colVremeZavrsetka;
-
+    private TableColumn<Partija, String> colKategorija;
     @FXML
-    private TableColumn<Partija, String> colPrezime;
+    private TableColumn<Partija, Integer> colBrojRundi;
+    @FXML
+    private TableColumn<Partija, String> colStatus;
 
-    /**
-     * Initializes the controller class.
-     */
     @FXML
     public void initialize() {
         kategorije.getItems().addAll("Sve", "Osobe", "Znamenitosti", "Bendovi", "Pop kultura");
         kategorije.setValue(null);
+
+        colNaziv.setCellValueFactory(new PropertyValueFactory<>("nazivPartije"));
+        colKategorija.setCellValueFactory(new PropertyValueFactory<>("odabranaKategorija"));
+        colBrojRundi.setCellValueFactory(new PropertyValueFactory<>("brojRundi"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+
         KointrolerGuiGlavnaForma kngui = new KointrolerGuiGlavnaForma(this);
+    }
+
+    public void dodajPartijuUTabelu(Partija partija) {
+        partije.getItems().add(partija);
+    }
+
+    public Partija getSelektovanaPartija() {
+        return partije.getSelectionModel().getSelectedItem();
     }
 
     public Stage stage;

@@ -4,14 +4,12 @@
  */
 package glavnaforma;
 
-import DomenskiObjekat.Korisnik;
 import DomenskiObjekat.Partija;
-import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Alert;
-import javafx.stage.Stage;
 import kontroler.KontrolerKlijent;
 
 /**
@@ -24,7 +22,7 @@ public class KointrolerGuiGlavnaForma {
 
     public KointrolerGuiGlavnaForma(FXMLGlavnaFormaController fxcon) {
         this.fxcon = fxcon;
-
+        ucitajPartije();
         this.fxcon.kreirajPartijuBtn.setOnAction(e -> {
             try {
                 kreirajPartiju();
@@ -33,6 +31,27 @@ public class KointrolerGuiGlavnaForma {
                         .log(Level.SEVERE, null, ex);
             }
         });
+        this.fxcon.zapocniPartijuBtn.setOnAction(e -> {
+            try {
+                zapocniPartiju();
+            } catch (Exception ex) {
+                Logger.getLogger(KointrolerGuiGlavnaForma.class.getName())
+                        .log(Level.SEVERE, null, ex);
+            }
+        });
+    }
+
+    private void ucitajPartije() {
+        try {
+            Partija partija = new Partija();
+            partija.setKorisnik(KontrolerKlijent.getInstance().getPrijavljeniKorisnik());
+            List<Partija> partije = KontrolerKlijent.getInstance().ucitajPartije(partija);
+            for (Partija p : partije) {
+                fxcon.dodajPartijuUTabelu(p);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(KointrolerGuiGlavnaForma.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void kreirajPartiju() throws Exception {
@@ -60,31 +79,55 @@ public class KointrolerGuiGlavnaForma {
         partija.setKorisnik(KontrolerKlijent.getInstance().getPrijavljeniKorisnik());
         partija.setBrojRundi(brojRundi);
         partija.setOdabranaKategorija((String) fxcon.kategorije.getValue());
-        partija.setNazivPartije(generisiNazivPartije(partija));
+        partija.setNazivPartije(generisiNazivPartije());
         partija.setStatus("Kreirana");
 
         partija = KontrolerKlijent.getInstance().kreirajPartiju(partija);
-        System.out.println(partija);
+        fxcon.dodajPartijuUTabelu(partija);
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Nova igra");
         alert.setHeaderText(null);
-        alert.setContentText("Nova partija je uspešno kreirana!");
+        alert.setContentText("Nova partija je uspesno kreirana!");
         alert.showAndWait();
-
-        igra.JFXIgra igra = new igra.JFXIgra();
-        Stage s = new Stage();
-        igra.start(s);
-
-        this.fxcon.closeStage();
     }
 
-    private String generisiNazivPartije(Partija partija) {
-        StringBuilder slova = new StringBuilder();
-        for (int i = 1; i < partija.getKorisnik().getKorisnickoIme().length(); i += 2) {
-            slova.append(partija.getKorisnik().getKorisnickoIme().charAt(i));
+    private String generisiNazivPartije() {
+        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        Random random = new Random();
+        String slova = "" + alphabet.charAt(random.nextInt(26)) + alphabet.charAt(random.nextInt(26));
+        int broj = random.nextInt(9000) + 1000;
+        return "P-" + slova + "-" + broj;
+    }
+
+    private void zapocniPartiju() throws Exception {
+        Partija partija = fxcon.getSelektovanaPartija();
+
+        if (partija == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Upozorenje");
+            alert.setHeaderText(null);
+            alert.setContentText("Morate selektovati partiju iz tabele!");
+            alert.showAndWait();
+            return;
         }
-        int broj = new Random().nextInt(9000) + 1000;
-        return "P-" + slova.toString().toUpperCase() + "-" + broj;
+
+        if (!partija.getStatus().equals("Kreirana")) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Upozorenje");
+            alert.setHeaderText(null);
+            alert.setContentText("Možete zapoceti samo partiju sa statusom 'Kreirana'!");
+            alert.showAndWait();
+            return;
+        }
+        
+        partija = KontrolerKlijent.getInstance().zapocniPartiju(partija);
+        System.out.println(partija);
+
+        /*igra.JFXIgra igra = new igra.JFXIgra();
+        igra.setPartija(selektovana);
+        javafx.stage.Stage s = new javafx.stage.Stage();
+        igra.start(s);
+        fxcon.closeStage();*/
     }
 }

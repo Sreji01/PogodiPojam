@@ -18,16 +18,16 @@ import java.util.Random;
  * @author Sreja
  */
 public class KreirajPartiju extends SystemOperation {
-    
+
     Partija partija;
-    
+
     @Override
     protected void validate(Object entity) throws Exception {
         if (!(entity instanceof Partija)) {
             throw new Exception("Invalid entity parameter!");
         }
     }
-    
+
     @Override
     protected void execute(Object entity) throws Exception {
         partija = (Partija) entity;
@@ -39,23 +39,25 @@ public class KreirajPartiju extends SystemOperation {
         Pojam pojam = new Pojam();
         pojam.setKategorija(partija.getOdabranaKategorija());
         List<Pojam> pojmovi = (List<Pojam>) (ArrayList<?>) databaseBroker.selectMany(pojam);
-        List<Runda> runde = new ArrayList<>();
-        
+
+        if (partija.getBrojRundi() > pojmovi.size()) {
+            throw new Exception("Nema dovoljno pojmova za trazeni broj rundi!");
+        }
+
+        java.util.Collections.shuffle(pojmovi);
+
         for (long i = 0; i < partija.getBrojRundi(); i++) {
             Runda runda = new Runda();
-            runda.setIdRunda(i +1);
+            runda.setIdRunda(i + 1);
+            runda.setTacanOdgovor(pojmovi.get((int) i).getNaziv());
             runda.setPojam(pojmovi.get((int) i));
             runda.setPartija(partija);
-            runde.add(runda);
             databaseBroker.insert(runda);
         }
-        
-        partija.setRunde(runde);
-        
     }
-    
+
     public Partija vratiPartiju() {
         return partija;
     }
-    
+
 }

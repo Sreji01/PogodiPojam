@@ -102,6 +102,7 @@ public class KointrolerGuiGlavnaForma {
 
     private void zapocniPartiju() throws Exception {
         Partija partija = fxcon.getSelektovanaPartija();
+        System.out.println(partija);
 
         if (partija == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -124,10 +125,10 @@ public class KointrolerGuiGlavnaForma {
         partija = KontrolerKlijent.getInstance().zapocniPartiju(partija);
         System.out.println(partija);
 
-        /*igra.JFXIgra igra = new igra.JFXIgra();
-        igra.setPartija(selektovana);
+        igra.JFXIgra igra = new igra.JFXIgra();
+        igra.setPartija(partija);
         javafx.stage.Stage s = new javafx.stage.Stage();
         igra.start(s);
-        fxcon.closeStage();*/
+        fxcon.closeStage();
     }
 }

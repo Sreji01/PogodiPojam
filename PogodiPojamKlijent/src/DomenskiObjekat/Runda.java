@@ -119,12 +119,12 @@ public class Runda implements GenerickiDomObj, Serializable {
 
     @Override
     public String getColumnsForInsert() {
-        return "id_partija, id_pojam";
+        return "id_partija, tacan_odgovor, id_pojam";
     }
 
     @Override
     public String getParamsForInsert() {
-        return partija.getIdPartija() + ", " + pojam.getIdPojam();
+        return partija.getIdPartija() + ", '" + tacanOdgovor + "', " + pojam.getIdPojam();
     }
 
     @Override
@@ -149,6 +149,9 @@ public class Runda implements GenerickiDomObj, Serializable {
 
     @Override
     public String getWhereCondition() {
+        if (partija != null && partija.getIdPartija() != null) {
+            return "WHERE r.id_partija = " + partija.getIdPartija();
+        }
         return "";
     }
 
@@ -157,7 +160,19 @@ public class Runda implements GenerickiDomObj, Serializable {
         byte[] slika = null;
         java.sql.Blob blob = rs.getBlob("p.slika");
         if (blob != null) {
-            slika = blob.getBytes(1, (int) blob.length());
+            try {
+                java.io.InputStream is = blob.getBinaryStream();
+                java.io.ByteArrayOutputStream buffer = new java.io.ByteArrayOutputStream();
+                byte[] chunk = new byte[4096];
+                int b;
+                while ((b = is.read(chunk)) != -1) {
+                    buffer.write(chunk, 0, b);
+                }
+                slika = buffer.toByteArray();
+                is.close();
+            } catch (java.io.IOException ex) {
+                ex.printStackTrace();
+            }
         }
         LocalDateTime pocetak = rs.getTimestamp("pa.vreme_pocetka") != null
                 ? rs.getTimestamp("pa.vreme_pocetka").toLocalDateTime()
@@ -165,7 +180,7 @@ public class Runda implements GenerickiDomObj, Serializable {
         LocalDateTime kraj = rs.getTimestamp("pa.vreme_zavrsetka") != null
                 ? rs.getTimestamp("pa.vreme_zavrsetka").toLocalDateTime()
                 : null;
-        return new Runda(new Partija(rs.getLong("pa.id_korisnik"), rs.getString("pa.naziv_partije"), pocetak, kraj, rs.getString("pa.odabrana_kategorija"), rs.getInt("pa.broj_rundi"), rs.getString("pa.status"),
+        return new Runda(new Partija(rs.getLong("pa.id_partija"), rs.getString("pa.naziv_partije"), pocetak, kraj, rs.getString("pa.odabrana_kategorija"), rs.getInt("pa.broj_rundi"), rs.getString("pa.status"),
                 new Korisnik(rs.getLong("k.id_korisnik"), rs.getString("k.ime"), rs.getString("k.prezime"), rs.getString("k.korisnicko_ime"), rs.getString("k.sifra")), null), rs.getLong("r.id_runda"), rs.getString("r.tacan_odgovor"), rs.getInt("r.broj_pokusaja"), rs.getBoolean("r.pogodjeno"), new Pojam(rs.getLong("p.id_pojam"), rs.getString("p.kategorija"), rs.getString("p.naziv"), slika));
     }
 

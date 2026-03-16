@@ -17,22 +17,27 @@ import javafx.stage.Stage;
  * @author Sreja
  */
 public class JFXIgra extends Application {
-       FXMLIgraController con;
+
+    FXMLIgraController con;
+    private DomenskiObjekat.Partija partija;
+
+    public void setPartija(DomenskiObjekat.Partija partija) {
+        this.partija = partija;
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
-        
         String resourcePath = "FXMLIgra.fxml";
         URL location = getClass().getResource(resourcePath);
         FXMLLoader fxmlLoader = new FXMLLoader(location);
         Parent root = fxmlLoader.load();
         con = (FXMLIgraController) fxmlLoader.getController();
         con.setStage(stage);
+        con.setPartija(partija);
         Scene scene = new Scene(root);
         scene.getStylesheets().add("CSS/stylesheet.css");
         stage.setScene(scene);
         stage.setTitle("Igra");
         stage.show();
-        
     }
 }

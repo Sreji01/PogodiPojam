@@ -1,22 +1,44 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package igra;
 
+import DomenskiObjekat.Partija;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author Sreja
- */
 public class FXMLIgraController {
 
+    Partija partija;
+    KontrolerGUIIgra kngui;
+
     @FXML
-    public void initialize() throws IllegalArgumentException, NoSuchFieldException, IllegalAccessException {
-        KontrolerGUIIgra kngui = new KontrolerGUIIgra(this);
+    public ImageView slika;
+    
+    @FXML
+    public Button prethodnaBtn;
+    @FXML
+    public Button sledecaBtn;
+    @FXML
+    public Button zpaamtiBtn;
+    @FXML
+    public Button odustaniBtn;
+    
+
+    @FXML
+    public void initialize() {
+    }
+
+    public void setPartija(Partija partija) {
+        this.partija = partija;
+        try {
+            kngui = new KontrolerGUIIgra(this);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public Partija getPartija() {
+        return partija;
     }
 
     public Stage stage;
@@ -28,5 +50,4 @@ public class FXMLIgraController {
     public void closeStage() {
         stage.close();
     }
-    
 }

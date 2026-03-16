@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DomenskiObjekat;
 
 import java.io.Serializable;
@@ -12,10 +8,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 
-/**
- *
- * @author Sreja
- */
 public class Partija implements GenerickiDomObj, Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -177,7 +169,7 @@ public class Partija implements GenerickiDomObj, Serializable {
     @Override
     public String setAtrValue() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return "vreme_pocetka = '" + java.time.LocalDateTime.now().format(formatter) + "'";
+        return "vreme_pocetka = '" + LocalDateTime.now().format(formatter) + "'";
     }
 
     @Override
@@ -212,9 +204,22 @@ public class Partija implements GenerickiDomObj, Serializable {
             LocalDateTime kraj = rs.getTimestamp("pa.vreme_zavrsetka") != null
                     ? rs.getTimestamp("pa.vreme_zavrsetka").toLocalDateTime()
                     : null;
-            return new Partija(rs.getLong("pa.id_korisnik"), rs.getString("pa.naziv_partije"), pocetak, kraj, rs.getString("pa.odabrana_kategorija"), rs.getInt("pa.broj_rundi"), rs.getString("pa.status"),
-                    new Korisnik(rs.getLong("k.id_korisnik"), rs.getString("k.ime"), rs.getString("k.prezime"), rs.getString("k.korisnicko_ime"), rs.getString("k.sifra")), null);
+            return new Partija(
+                    rs.getLong("pa.id_partija"),
+                    rs.getString("pa.naziv_partije"),
+                    pocetak, kraj,
+                    rs.getString("pa.odabrana_kategorija"),
+                    rs.getInt("pa.broj_rundi"),
+                    rs.getString("pa.status"),
+                    new Korisnik(rs.getLong("k.id_korisnik"), rs.getString("k.ime"),
+                            rs.getString("k.prezime"), rs.getString("k.korisnicko_ime"),
+                            rs.getString("k.sifra")), null);
         }
-        return new Partija(rs.getLong("id_korisnik"), rs.getString("naziv_partije"), rs.getString("odabrana_kategorija"), rs.getInt("broj_rundi"), rs.getString("status"));
+        return new Partija(
+                rs.getLong("id_partija"),
+                rs.getString("naziv_partije"),
+                rs.getString("odabrana_kategorija"),
+                rs.getInt("broj_rundi"),
+                rs.getString("status"));
     }
 }

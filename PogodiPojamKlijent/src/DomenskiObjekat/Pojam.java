@@ -140,12 +140,25 @@ public class Pojam implements GenerickiDomObj, Serializable {
 
     @Override
     public GenerickiDomObj getNewRecord(ResultSet rs) throws SQLException {
-        byte[] slika = null;
+        byte[] slikaPojma = null;
         java.sql.Blob blob = rs.getBlob("slika");
         if (blob != null) {
-            slika = blob.getBytes(1, (int) blob.length());
+            try {
+                java.io.InputStream is = blob.getBinaryStream();
+                java.io.ByteArrayOutputStream buffer = new java.io.ByteArrayOutputStream();
+                byte[] chunk = new byte[4096];
+                int b;
+                while ((b = is.read(chunk)) != -1) {
+                    buffer.write(chunk, 0, b);
+                }
+                slikaPojma = buffer.toByteArray();
+                is.close();
+                System.out.println("Slika ucitana, velicina: " + slika.length + " bajtova");
+            } catch (java.io.IOException ex) {
+                ex.printStackTrace();
+            }
         }
-        return new Pojam(rs.getLong("id_pojam"), rs.getString("kategorija"), rs.getString("naziv"), slika);
+        return new Pojam(rs.getLong("id_pojam"), rs.getString("kategorija"), rs.getString("naziv"), slikaPojma);
     }
 
 }

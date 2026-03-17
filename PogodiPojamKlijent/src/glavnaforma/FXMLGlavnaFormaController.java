@@ -31,6 +31,8 @@ public class FXMLGlavnaFormaController {
     @FXML
     public Button zapocniPartijuBtn;
     @FXML
+    public Button detaljiPartijeBtn;
+    @FXML
     private TableView<Partija> partije;
     @FXML
     private TableColumn<Partija, String> colNaziv;
@@ -59,8 +61,8 @@ public class FXMLGlavnaFormaController {
     }
 
     public void dodajPartijuUTabelu(Partija partija) {
-        partije.getItems().add(partija);
-    }
+    partije.getItems().add(0, partija);
+}
 
     public Partija getSelektovanaPartija() {
         return partije.getSelectionModel().getSelectedItem();

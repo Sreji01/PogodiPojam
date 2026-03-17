@@ -10,6 +10,7 @@ import SO.KreirajPartiju;
 import SO.PrijaviKorisnika;
 import SO.SystemOperation;
 import SO.UcitajPartije;
+import SO.UcitajPartiju;
 import SO.ZapocniPartiju;
 import SO.ZavrsiPartiju;
 import java.net.ServerSocket;
@@ -77,11 +78,16 @@ public class KontrolerServer {
         SystemOperation so = new ZapocniPartiju();
         so.templateExecute(partija);
         return ((ZapocniPartiju) so).vratiPartiju();
-
     }
 
     void zavrsiPartiju(Partija partija) throws Exception {
         SystemOperation so = new ZavrsiPartiju();
         so.templateExecute(partija);
+    }
+
+    Partija ucitajPartiju(Partija partija) throws Exception {
+        SystemOperation so = new UcitajPartiju();
+        so.templateExecute(partija);
+        return ((UcitajPartiju) so).vratiPartiju();
     }
 }

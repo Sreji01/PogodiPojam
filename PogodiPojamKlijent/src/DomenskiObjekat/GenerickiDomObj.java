@@ -7,7 +7,6 @@ package DomenskiObjekat;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 /**
  *
@@ -22,5 +21,6 @@ public interface GenerickiDomObj extends Serializable{
     public String alijas();
     public String join();
     public String getWhereCondition();
+    public String getOrderCondition();
     public GenerickiDomObj getNewRecord(ResultSet rs) throws SQLException;
 }

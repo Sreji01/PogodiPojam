@@ -148,6 +148,11 @@ public class Korisnik implements GenerickiDomObj, Serializable {
     }
 
     @Override
+    public String getOrderCondition() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
     public GenerickiDomObj getNewRecord(ResultSet rs) throws SQLException {
         return new Korisnik(rs.getLong("id_korisnik"), rs.getString("ime"), rs.getString("prezime"), rs.getString("korisnicko_ime"), rs.getString("sifra"));
     }

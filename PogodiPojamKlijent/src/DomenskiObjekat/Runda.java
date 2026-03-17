@@ -136,6 +136,11 @@ public class Runda implements GenerickiDomObj, Serializable {
     }
 
     @Override
+    public String getOrderCondition() {
+        return "";
+    }
+
+    @Override
     public GenerickiDomObj getNewRecord(ResultSet rs) throws SQLException {
         byte[] slika = null;
         java.sql.Blob blob = rs.getBlob("p.slika");
@@ -161,7 +166,7 @@ public class Runda implements GenerickiDomObj, Serializable {
                 ? rs.getTimestamp("pa.vreme_zavrsetka").toLocalDateTime()
                 : null;
         return new Runda(new Partija(rs.getLong("pa.id_partija"), rs.getString("pa.naziv_partije"), pocetak, kraj, rs.getString("pa.odabrana_kategorija"), rs.getInt("pa.broj_rundi"), rs.getString("pa.status"),
-                new Korisnik(rs.getLong("k.id_korisnik"), rs.getString("k.ime"), rs.getString("k.prezime"), rs.getString("k.korisnicko_ime"), rs.getString("k.sifra")), null), rs.getLong("r.id_runda"), rs.getString("r.tacan_odgovor"), rs.getInt("r.broj_pokusaja"),rs.getInt("r.broj_poena"), rs.getBoolean("r.pogodjeno"), new Pojam(rs.getLong("p.id_pojam"), rs.getString("p.kategorija"), rs.getString("p.naziv"), slika));
+                new Korisnik(rs.getLong("k.id_korisnik"), rs.getString("k.ime"), rs.getString("k.prezime"), rs.getString("k.korisnicko_ime"), rs.getString("k.sifra")), null), rs.getLong("r.id_runda"), rs.getString("r.tacan_odgovor"), rs.getInt("r.broj_pokusaja"), rs.getInt("r.broj_poena"), rs.getBoolean("r.pogodjeno"), new Pojam(rs.getLong("p.id_pojam"), rs.getString("p.kategorija"), rs.getString("p.naziv"), slika));
     }
 
 }

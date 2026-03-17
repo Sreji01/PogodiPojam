@@ -177,7 +177,7 @@ public class Partija implements GenerickiDomObj, Serializable {
 
     @Override
     public String getPrimaryKey() {
-        return "id_partija = " + idPartija;
+        return "pa.id_partija = " + idPartija;
     }
 
     @Override
@@ -187,8 +187,13 @@ public class Partija implements GenerickiDomObj, Serializable {
 
     @Override
     public String join() {
-        if (odabranaKategorija != null && brojRundi != 0 && status != null) {
-            return "JOIN korisnik k ON pa.id_korisnik = k.id_korisnik";
+        if (status != null) {
+            if (status.equals("Zavrsena")) {
+                return "JOIN korisnik k ON pa.id_korisnik = k.id_korisnik JOIN rezultat r ON pa.id_rezultat = r.id_rezultat";
+            }
+            if (odabranaKategorija != null && brojRundi != 0) {
+                return "JOIN korisnik k ON pa.id_korisnik = k.id_korisnik";
+            }
         }
         return "";
     }
@@ -196,6 +201,11 @@ public class Partija implements GenerickiDomObj, Serializable {
     @Override
     public String getWhereCondition() {
         return "WHERE id_korisnik = " + korisnik.getIdKorisnik();
+    }
+
+    @Override
+    public String getOrderCondition() {
+        return "ORDER BY STATUS DESC";
     }
 
     @Override
@@ -207,6 +217,19 @@ public class Partija implements GenerickiDomObj, Serializable {
             LocalDateTime kraj = rs.getTimestamp("pa.vreme_zavrsetka") != null
                     ? rs.getTimestamp("pa.vreme_zavrsetka").toLocalDateTime()
                     : null;
+            if (status.equals("Zavrsena")) {
+                return new Partija(
+                        rs.getLong("pa.id_partija"),
+                        rs.getString("pa.naziv_partije"),
+                        pocetak, kraj,
+                        rs.getString("pa.odabrana_kategorija"),
+                        rs.getInt("pa.broj_rundi"),
+                        rs.getString("pa.status"),
+                        new Korisnik(rs.getLong("k.id_korisnik"), rs.getString("k.ime"),
+                                rs.getString("k.prezime"), rs.getString("k.korisnicko_ime"),
+                                rs.getString("k.sifra")), new Rezultat(rs.getLong("r.id_rezultat"), rs.getInt("r.ukupan_broj_poena"),
+                                rs.getInt("r.ukupan_broj_pokusaja"), rs.getInt("r.ukupno_provedeno_vreme"), this));
+            }
             return new Partija(
                     rs.getLong("pa.id_partija"),
                     rs.getString("pa.naziv_partije"),

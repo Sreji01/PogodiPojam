@@ -132,10 +132,15 @@ public class Pojam implements GenerickiDomObj, Serializable {
     @Override
     public String getWhereCondition() {
         if (kategorija.equals("Sve")) {
-            return "ORDER BY RAND()";
+            return "";
         } else {
-            return "WHERE kategorija = '" + kategorija + "' ORDER BY RAND()";
+            return "WHERE kategorija = '" + kategorija + "'";
         }
+    }
+    
+    @Override
+    public String getOrderCondition() {
+        return "ORDER BY RAND()";
     }
 
     @Override

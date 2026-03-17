@@ -1,6 +1,5 @@
 package Server;
 
-import DomenskiObjekat.GenerickiDomObj;
 import DomenskiObjekat.Korisnik;
 import DomenskiObjekat.Partija;
 import TransferObjekat.ClientRequest;
@@ -145,6 +144,20 @@ public class Klijent extends Thread {
                     Logger.getLogger(Klijent.class.getName()).log(Level.SEVERE, null, ex);
                     response.setIsSuccess(false);
                     response.setOperation(Operations.ZAVRSI_PARTIJU);
+                    response.setE(ex);
+                }
+                break;
+            case Operations.UCITAJ_PARTIJU:
+                Partija partijaZaDetalje = (Partija) kz.getData();
+                try {
+                    partijaZaDetalje = KontrolerServer.getInstance().ucitajPartiju(partijaZaDetalje);
+                    response.setIsSuccess(true);
+                    response.setParameter(partijaZaDetalje);
+                    response.setOperation(Operations.UCITAJ_PARTIJU);
+                } catch (Exception ex) {
+                    Logger.getLogger(Klijent.class.getName()).log(Level.SEVERE, null, ex);
+                    response.setIsSuccess(false);
+                    response.setOperation(Operations.UCITAJ_PARTIJU);
                     response.setE(ex);
                 }
                 break;

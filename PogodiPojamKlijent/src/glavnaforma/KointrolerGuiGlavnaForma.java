@@ -5,6 +5,7 @@
 package glavnaforma;
 
 import DomenskiObjekat.Partija;
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
@@ -34,6 +35,14 @@ public class KointrolerGuiGlavnaForma {
         this.fxcon.zapocniPartijuBtn.setOnAction(e -> {
             try {
                 zapocniPartiju();
+            } catch (Exception ex) {
+                Logger.getLogger(KointrolerGuiGlavnaForma.class.getName())
+                        .log(Level.SEVERE, null, ex);
+            }
+        });
+        this.fxcon.detaljiPartijeBtn.setOnAction(e -> {
+            try {
+                ucitajPartiju();
             } catch (Exception ex) {
                 Logger.getLogger(KointrolerGuiGlavnaForma.class.getName())
                         .log(Level.SEVERE, null, ex);
@@ -121,7 +130,7 @@ public class KointrolerGuiGlavnaForma {
             alert.showAndWait();
             return;
         }
-        
+
         partija = KontrolerKlijent.getInstance().zapocniPartiju(partija);
         System.out.println(partija);
 
@@ -130,5 +139,54 @@ public class KointrolerGuiGlavnaForma {
         javafx.stage.Stage s = new javafx.stage.Stage();
         igra.start(s);
         fxcon.closeStage();
+    }
+
+    private void ucitajPartiju() throws Exception {
+        Partija partija = fxcon.getSelektovanaPartija();
+
+        if (partija == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Upozorenje");
+            alert.setHeaderText(null);
+            alert.setContentText("Morate selektovati partiju iz tabele!");
+            alert.showAndWait();
+            return;
+        }
+
+        partija = KontrolerKlijent.getInstance().ucitajPartiju(partija);
+
+        if (partija.getRezultat() == null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Informacije o partiji");
+            alert.setHeaderText("Partija: " + partija.getNazivPartije());
+            alert.setContentText("Ova partija jos uvek nema zabelezen rezultat (Status: " + partija.getStatus() + ").");
+            alert.showAndWait();
+            return;
+        }
+
+        java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm:ss");
+        String pocetak = partija.getVremePocetka() != null ? partija.getVremePocetka().format(formatter) : "Nije zabelezeno";
+        String kraj = partija.getVremeZavrsetka() != null ? partija.getVremeZavrsetka().format(formatter) : "Nije zabelezeno";
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Vreme pocetka: ").append(pocetak).append("\n");
+        sb.append("Vreme zavrsetka: ").append(kraj).append("\n");
+        sb.append("-----------------------------------\n");
+        sb.append("Ukupan broj poena: ").append(partija.getRezultat().getUkupanBrojPoena()).append("\n");
+        sb.append("Ukupan broj pokusaja: ").append(partija.getRezultat().getUkupanBrojPokusaja()).append("\n");
+
+        int ukupnoSekundi = partija.getRezultat().getUkupnoVreme();
+        int min = ukupnoSekundi / 60;
+        int sek = ukupnoSekundi % 60;
+        sb.append("Provedeno vreme: ").append(String.format("%02d:%02d", min, sek)).append(" (min:sek)");
+
+        Alert detalji = new Alert(Alert.AlertType.INFORMATION);
+        detalji.setTitle("Detalji zavrsene partije");
+        detalji.setHeaderText("Statistika za partiju: " + partija.getNazivPartije());
+        detalji.setContentText(sb.toString());
+
+        detalji.getDialogPane().setMinWidth(400);
+
+        detalji.showAndWait();
     }
 }

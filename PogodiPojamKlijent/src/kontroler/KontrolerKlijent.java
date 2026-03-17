@@ -167,4 +167,17 @@ public class KontrolerKlijent {
 
         sendRequest(req);
     }
+
+    public Partija ucitajPartiju(Partija partija) throws Exception {
+        ClientRequest req = new ClientRequest();
+        req.setOperation(Operations.UCITAJ_PARTIJU);
+        req.setData(partija);
+
+        ServerResponse so = sendRequest(req);
+        if (so.isIsSuccess()) {
+            return (Partija) so.getParameter();
+        } else {
+            throw so.getE();
+        }
+    }
 }

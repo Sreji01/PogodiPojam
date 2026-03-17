@@ -153,7 +153,6 @@ public class Pojam implements GenerickiDomObj, Serializable {
                 }
                 slikaPojma = buffer.toByteArray();
                 is.close();
-                System.out.println("Slika ucitana, velicina: " + slika.length + " bajtova");
             } catch (java.io.IOException ex) {
                 ex.printStackTrace();
             }

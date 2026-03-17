@@ -16,13 +16,17 @@ import javafx.stage.Stage;
  *
  * @author Sreja
  */
-public class JFXGlavnaForma extends Application{
+public class JFXGlavnaForma extends Application {
 
     FXMLGlavnaFormaController controller;
     private Korisnik korisnik;
 
     public void setKorisnik(Korisnik korisnik) {
         this.korisnik = korisnik;
+    }
+
+    public FXMLGlavnaFormaController getController() {
+        return controller;
     }
 
     @Override

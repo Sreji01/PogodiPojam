@@ -4,7 +4,6 @@
  */
 package Server;
 
-import DomenskiObjekat.GenerickiDomObj;
 import DomenskiObjekat.Korisnik;
 import DomenskiObjekat.Partija;
 import SO.KreirajPartiju;
@@ -12,12 +11,11 @@ import SO.PrijaviKorisnika;
 import SO.SystemOperation;
 import SO.UcitajPartije;
 import SO.ZapocniPartiju;
+import SO.ZavrsiPartiju;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -80,5 +78,10 @@ public class KontrolerServer {
         so.templateExecute(partija);
         return ((ZapocniPartiju) so).vratiPartiju();
 
+    }
+
+    void zavrsiPartiju(Partija partija) throws Exception {
+        SystemOperation so = new ZavrsiPartiju();
+        so.templateExecute(partija);
     }
 }

@@ -19,15 +19,17 @@ public class Rezultat implements GenerickiDomObj, Serializable{
     int ukupanBrojPoena;
     int ukupanBrojPokusaja;
     int ukupnoVreme;
+    Partija partija;
 
     public Rezultat() {
     }
 
-    public Rezultat(Long idRezultat, int ukupanBrojPoena, int ukupanBrojPokusaja, int ukupnoVreme) {
+    public Rezultat(Long idRezultat, int ukupanBrojPoena, int ukupanBrojPokusaja, int ukupnoVreme, Partija partija) {
         this.idRezultat = idRezultat;
         this.ukupanBrojPoena = ukupanBrojPoena;
         this.ukupanBrojPokusaja = ukupanBrojPokusaja;
         this.ukupnoVreme = ukupnoVreme;
+        this.partija = partija;
     }
 
     public Long getIdRezultat() {
@@ -62,6 +64,14 @@ public class Rezultat implements GenerickiDomObj, Serializable{
         this.ukupnoVreme = ukupnoVreme;
     }
 
+    public Partija getPartija() {
+        return partija;
+    }
+
+    public void setPartija(Partija partija) {
+        this.partija = partija;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
@@ -90,17 +100,17 @@ public class Rezultat implements GenerickiDomObj, Serializable{
 
     @Override
     public String getTableName() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "rezultat";
     }
 
     @Override
     public String getColumnsForInsert() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "ukupan_broj_poena, ukupan_broj_pokusaja, ukupno_provedeno_vreme, id_partija";
     }
 
     @Override
     public String getParamsForInsert() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return ukupanBrojPoena + ", " + ukupanBrojPokusaja + ", " + ukupnoVreme + ", " + partija.idPartija;
     }
 
     @Override

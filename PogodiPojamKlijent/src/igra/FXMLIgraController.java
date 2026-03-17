@@ -3,6 +3,8 @@ package igra;
 import DomenskiObjekat.Partija;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
@@ -22,6 +24,18 @@ public class FXMLIgraController {
     public Button zpaamtiBtn;
     @FXML
     public Button odustaniBtn;
+    @FXML
+    public TextField pojam;
+    @FXML
+    public Label brojPokusaja;
+    @FXML
+    public Label potBrojPoena;
+    @FXML
+    public Label brojPoena;
+    @FXML
+    public Label tajmer;
+    @FXML
+    public Label ukupanBrojPoena;
     
 
     @FXML

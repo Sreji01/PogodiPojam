@@ -148,7 +148,7 @@ public class Partija implements GenerickiDomObj, Serializable {
 
     @Override
     public String toString() {
-        return "Partija{" + "idPartija=" + idPartija + ", vremePocetka=" + vremePocetka + ", vremeZavrsetka=" + vremeZavrsetka + ", korisnik=" + korisnik + ", rezultat=" + rezultat + '}';
+        return "Partija{" + "idPartija=" + idPartija + ", nazivPartije=" + nazivPartije + ", vremePocetka=" + vremePocetka + ", vremeZavrsetka=" + vremeZavrsetka + ", odabranaKategorija=" + odabranaKategorija + ", brojRundi=" + brojRundi + ", status=" + status + '}';
     }
 
     @Override
@@ -169,7 +169,10 @@ public class Partija implements GenerickiDomObj, Serializable {
     @Override
     public String setAtrValue() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return "vreme_pocetka = '" + LocalDateTime.now().format(formatter) + "'";
+        if (vremeZavrsetka == null) {
+            return "vreme_pocetka = '" + LocalDateTime.now().format(formatter) + "'";
+        }
+        return "vreme_zavrsetka = '" + LocalDateTime.now().format(formatter) + "', status = '" + status + "', id_rezultat = " + rezultat.getIdRezultat();
     }
 
     @Override

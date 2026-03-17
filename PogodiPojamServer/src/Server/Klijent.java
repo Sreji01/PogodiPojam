@@ -135,7 +135,19 @@ public class Klijent extends Thread {
                     response.setE(ex);
                 }
                 break;
-
+            case Operations.ZAVRSI_PARTIJU:
+                Partija partijaZaZavrsavanje = (Partija) kz.getData();
+                try {
+                    KontrolerServer.getInstance().zavrsiPartiju(partijaZaZavrsavanje);
+                    response.setIsSuccess(true);
+                    response.setOperation(Operations.ZAVRSI_PARTIJU);
+                } catch (Exception ex) {
+                    Logger.getLogger(Klijent.class.getName()).log(Level.SEVERE, null, ex);
+                    response.setIsSuccess(false);
+                    response.setOperation(Operations.ZAVRSI_PARTIJU);
+                    response.setE(ex);
+                }
+                break;
             default:
                 break;
         }

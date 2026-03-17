@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package glavnaforma;
 
 import DomenskiObjekat.Partija;
@@ -16,34 +12,24 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author Sreja
- */
 public class FXMLGlavnaFormaController {
 
     @FXML
     public Menu rezultati;
     @FXML
     public Menu izlaz;
-
     @FXML
     public MenuItem pogledajRangListu;
     @FXML
     public MenuItem izlazIzIgre;
-
     @FXML
     public ComboBox kategorije;
-
     @FXML
     public TextField brojRundi;
-
     @FXML
     public Button kreirajPartijuBtn;
     @FXML
     public Button zapocniPartijuBtn;
-
     @FXML
     private TableView<Partija> partije;
     @FXML
@@ -55,17 +41,21 @@ public class FXMLGlavnaFormaController {
     @FXML
     private TableColumn<Partija, String> colStatus;
 
+    KointrolerGuiGlavnaForma kngui;
+
+    public KointrolerGuiGlavnaForma getKontroler() {
+        return kngui;
+    }
+
     @FXML
     public void initialize() {
         kategorije.getItems().addAll("Sve", "Osobe", "Znamenitosti", "Bendovi", "Pop kultura");
         kategorije.setValue(null);
-
         colNaziv.setCellValueFactory(new PropertyValueFactory<>("nazivPartije"));
         colKategorija.setCellValueFactory(new PropertyValueFactory<>("odabranaKategorija"));
         colBrojRundi.setCellValueFactory(new PropertyValueFactory<>("brojRundi"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-
-        KointrolerGuiGlavnaForma kngui = new KointrolerGuiGlavnaForma(this);
+        kngui = new KointrolerGuiGlavnaForma(this);
     }
 
     public void dodajPartijuUTabelu(Partija partija) {
@@ -85,5 +75,4 @@ public class FXMLGlavnaFormaController {
     public void closeStage() {
         stage.close();
     }
-
 }

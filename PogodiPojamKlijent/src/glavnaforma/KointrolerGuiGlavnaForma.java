@@ -41,7 +41,7 @@ public class KointrolerGuiGlavnaForma {
         });
     }
 
-    private void ucitajPartije() {
+    public void ucitajPartije() {
         try {
             Partija partija = new Partija();
             partija.setKorisnik(KontrolerKlijent.getInstance().getPrijavljeniKorisnik());

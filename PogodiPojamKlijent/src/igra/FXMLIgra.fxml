@@ -6,14 +6,21 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="449.0" prefWidth="701.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="igra.FXMLIgraController">
+<AnchorPane id="AnchorPane" prefHeight="433.0" prefWidth="732.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="igra.FXMLIgraController">
    <children>
       <ImageView fx:id="slika" fitHeight="279.0" fitWidth="413.0" layoutX="144.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true" />
-      <Label layoutX="95.0" layoutY="379.0" text="Unesi pojam:" />
+      <Label layoutX="580.0" layoutY="271.0" text="Ukupan broj poena:" />
       <TextField fx:id="pojam" layoutX="200.0" layoutY="374.0" prefHeight="26.0" prefWidth="172.0" />
       <Button fx:id="zpaamtiBtn" layoutX="400.0" layoutY="375.0" mnemonicParsing="false" text="Zapamti" />
-      <Button fx:id="sledecaBtn" layoutX="601.0" layoutY="161.0" mnemonicParsing="false" text="Sledeca" />
-      <Button fx:id="prethodnaBtn" layoutX="24.0" layoutY="161.0" mnemonicParsing="false" text="Prethodna" />
-      <Button fx:id="odustaniBtn" layoutX="577.0" layoutY="375.0" mnemonicParsing="false" text="Odustani" />
+      <Button fx:id="sledecaBtn" layoutX="607.0" layoutY="194.0" mnemonicParsing="false" text="Sledeca" />
+      <Button fx:id="prethodnaBtn" layoutX="23.0" layoutY="194.0" mnemonicParsing="false" text="Prethodna" />
+      <Button fx:id="odustaniBtn" layoutX="614.0" layoutY="375.0" mnemonicParsing="false" text="Odustani" />
+      <Label layoutX="31.0" layoutY="68.0" text="Broj pokusaja:" />
+      <Label fx:id="potBrojPoena" layoutX="570.0" layoutY="68.0" text="Potencijalni broj poena:" />
+      <Label fx:id="brojPokusaja" layoutX="64.0" layoutY="95.0" text="0" />
+      <Label fx:id="brojPoena" layoutX="628.0" layoutY="95.0" prefHeight="18.0" prefWidth="0.0" text="5" />
+      <Label fx:id="ukupanBrojPoena" layoutX="631.0" layoutY="305.0" text="0" />
+      <Label layoutX="48.0" layoutY="271.0" text="Tajmer:" />
+      <Label fx:id="tajmer" layoutX="55.0" layoutY="305.0" text="0" />
    </children>
 </AnchorPane>

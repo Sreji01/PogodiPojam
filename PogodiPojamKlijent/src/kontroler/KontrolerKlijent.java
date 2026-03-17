@@ -159,4 +159,12 @@ public class KontrolerKlijent {
             throw so.getE();
         }
     }
+
+    public void zavrsiPartiju(Partija partija) throws Exception {
+        ClientRequest req = new ClientRequest();
+        req.setOperation(Operations.ZAVRSI_PARTIJU);
+        req.setData(partija);
+
+        sendRequest(req);
+    }
 }

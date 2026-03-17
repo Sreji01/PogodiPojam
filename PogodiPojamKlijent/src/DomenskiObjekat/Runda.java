@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 /**
  *
@@ -20,17 +19,19 @@ public class Runda implements GenerickiDomObj, Serializable {
     Long idRunda;
     String tacanOdgovor;
     int brojPokusaja;
+    int brojPoena;
     boolean pogodjeno;
     Pojam pojam;
 
     public Runda() {
     }
 
-    public Runda(Partija partija, Long idRunda, String tacanOdgovor, int brojPokusaja, boolean pogodjeno, Pojam pojam) {
+    public Runda(Partija partija, Long idRunda, String tacanOdgovor, int brojPokusaja, int brojPoena, boolean pogodjeno, Pojam pojam) {
         this.partija = partija;
         this.idRunda = idRunda;
         this.tacanOdgovor = tacanOdgovor;
         this.brojPokusaja = brojPokusaja;
+        this.brojPoena = brojPoena;
         this.pogodjeno = pogodjeno;
         this.pojam = pojam;
     }
@@ -67,6 +68,14 @@ public class Runda implements GenerickiDomObj, Serializable {
         this.brojPokusaja = brojPokusaja;
     }
 
+    public int getBrojPoena() {
+        return brojPoena;
+    }
+
+    public void setBrojPoena(int brojPoena) {
+        this.brojPoena = brojPoena;
+    }
+
     public boolean isPogodjeno() {
         return pogodjeno;
     }
@@ -81,35 +90,6 @@ public class Runda implements GenerickiDomObj, Serializable {
 
     public void setPojam(Pojam pojam) {
         this.pojam = pojam;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Runda other = (Runda) obj;
-        if (!Objects.equals(this.partija, other.partija)) {
-            return false;
-        }
-        return Objects.equals(this.idRunda, other.idRunda);
-    }
-
-    @Override
-    public String toString() {
-        return "Runda{" + "partija=" + partija + ", idRunda=" + idRunda + ", tacanOdgovor=" + tacanOdgovor + ", brojPokusaja=" + brojPokusaja + ", pogodjeno=" + pogodjeno + ", pojam=" + pojam + '}';
     }
 
     @Override
@@ -181,7 +161,7 @@ public class Runda implements GenerickiDomObj, Serializable {
                 ? rs.getTimestamp("pa.vreme_zavrsetka").toLocalDateTime()
                 : null;
         return new Runda(new Partija(rs.getLong("pa.id_partija"), rs.getString("pa.naziv_partije"), pocetak, kraj, rs.getString("pa.odabrana_kategorija"), rs.getInt("pa.broj_rundi"), rs.getString("pa.status"),
-                new Korisnik(rs.getLong("k.id_korisnik"), rs.getString("k.ime"), rs.getString("k.prezime"), rs.getString("k.korisnicko_ime"), rs.getString("k.sifra")), null), rs.getLong("r.id_runda"), rs.getString("r.tacan_odgovor"), rs.getInt("r.broj_pokusaja"), rs.getBoolean("r.pogodjeno"), new Pojam(rs.getLong("p.id_pojam"), rs.getString("p.kategorija"), rs.getString("p.naziv"), slika));
+                new Korisnik(rs.getLong("k.id_korisnik"), rs.getString("k.ime"), rs.getString("k.prezime"), rs.getString("k.korisnicko_ime"), rs.getString("k.sifra")), null), rs.getLong("r.id_runda"), rs.getString("r.tacan_odgovor"), rs.getInt("r.broj_pokusaja"),rs.getInt("r.broj_poena"), rs.getBoolean("r.pogodjeno"), new Pojam(rs.getLong("p.id_pojam"), rs.getString("p.kategorija"), rs.getString("p.naziv"), slika));
     }
 
 }

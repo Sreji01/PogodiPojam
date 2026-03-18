@@ -16,4 +16,6 @@ public class Operations {
     public static final int ZAPOCNI_PARTIJU = 4;
     public static final int ZAVRSI_PARTIJU = 5;
     public static final int UCITAJ_PARTIJU = 6;
+    public static final int UCITAJ_REZULTATE = 7;
+    public static final int PRETRAZI_REZULTATE = 8;
 }

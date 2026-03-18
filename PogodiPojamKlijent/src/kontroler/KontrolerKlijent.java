@@ -6,6 +6,7 @@ package kontroler;
 
 import DomenskiObjekat.Korisnik;
 import DomenskiObjekat.Partija;
+import DomenskiObjekat.Rezultat;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -176,6 +177,32 @@ public class KontrolerKlijent {
         ServerResponse so = sendRequest(req);
         if (so.isIsSuccess()) {
             return (Partija) so.getParameter();
+        } else {
+            throw so.getE();
+        }
+    }
+
+    public List<Rezultat> ucitajRezultate() throws Exception {
+        ClientRequest req = new ClientRequest();
+        req.setOperation(Operations.UCITAJ_REZULTATE);
+        req.setData(null);
+
+        ServerResponse so = sendRequest(req);
+        if (so.isIsSuccess()) {
+            return (List<Rezultat>) so.getParameter();
+        } else {
+            throw so.getE();
+        }
+    }
+
+    public List<Rezultat> pretraziRezultate(Rezultat rezultat) throws Exception {
+        ClientRequest req = new ClientRequest();
+        req.setOperation(Operations.PRETRAZI_REZULTATE);
+        req.setData(rezultat);
+
+        ServerResponse so = sendRequest(req);
+        if (so.isIsSuccess()) {
+            return (List<Rezultat>) so.getParameter();
         } else {
             throw so.getE();
         }

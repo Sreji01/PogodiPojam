@@ -48,6 +48,9 @@ public class KointrolerGuiGlavnaForma {
                         .log(Level.SEVERE, null, ex);
             }
         });
+        this.fxcon.pogledajRangListu.setOnAction(e -> {
+            otvoriRangListu();
+        });
     }
 
     public void ucitajPartije() {
@@ -188,5 +191,27 @@ public class KointrolerGuiGlavnaForma {
         detalji.getDialogPane().setMinWidth(400);
 
         detalji.showAndWait();
+    }
+
+    private void otvoriRangListu() {
+        try {
+            ranglista.JFXRangLista rangLista = new ranglista.JFXRangLista();
+
+            rangLista.setKorisnik(KontrolerKlijent.getInstance().getPrijavljeniKorisnik());
+
+            javafx.stage.Stage stage = new javafx.stage.Stage();
+
+            rangLista.start(stage);
+
+        } catch (Exception ex) {
+            Logger.getLogger(KointrolerGuiGlavnaForma.class.getName())
+                    .log(Level.SEVERE, "Greska pri otvaranju rang liste", ex);
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Greska");
+            alert.setHeaderText("Neuspesno otvaranje rang liste");
+            alert.setContentText(ex.getMessage());
+            alert.showAndWait();
+        }
     }
 }

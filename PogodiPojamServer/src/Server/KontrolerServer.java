@@ -6,11 +6,14 @@ package Server;
 
 import DomenskiObjekat.Korisnik;
 import DomenskiObjekat.Partija;
+import DomenskiObjekat.Rezultat;
 import SO.KreirajPartiju;
+import SO.PretraziRezultate;
 import SO.PrijaviKorisnika;
 import SO.SystemOperation;
 import SO.UcitajPartije;
 import SO.UcitajPartiju;
+import SO.UcitajRezultate;
 import SO.ZapocniPartiju;
 import SO.ZavrsiPartiju;
 import java.net.ServerSocket;
@@ -90,4 +93,18 @@ public class KontrolerServer {
         so.templateExecute(partija);
         return ((UcitajPartiju) so).vratiPartiju();
     }
+
+    List<Rezultat> ucitajRezultate() throws Exception {
+        SystemOperation so = new UcitajRezultate();
+        Rezultat rezultat = new Rezultat();
+        so.templateExecute(rezultat);
+        return ((UcitajRezultate) so).vratiRezultate();
+    }
+
+    List<Rezultat> pretraziRezultate(Rezultat rezultat) throws Exception {
+        SystemOperation so = new PretraziRezultate();
+        so.templateExecute(rezultat);
+        return ((PretraziRezultate) so).vratiRezultate();
+    }
+
 }

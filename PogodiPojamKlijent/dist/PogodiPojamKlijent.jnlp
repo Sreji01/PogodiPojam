@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="PogodiPojamKlijent.jar" size="159864" download="eager" />
+    <jar href="PogodiPojamKlijent.jar" size="169417" download="eager" />
   </resources>
   <jfx:javafx-desc  width="800" height="600" main-class="login.JFXLogin"  name="PogodiPojamKlijent" />
   <update check="always"/>

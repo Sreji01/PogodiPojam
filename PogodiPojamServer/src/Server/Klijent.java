@@ -2,6 +2,7 @@ package Server;
 
 import DomenskiObjekat.Korisnik;
 import DomenskiObjekat.Partija;
+import DomenskiObjekat.Rezultat;
 import TransferObjekat.ClientRequest;
 import TransferObjekat.Operations;
 import TransferObjekat.ServerResponse;
@@ -158,6 +159,33 @@ public class Klijent extends Thread {
                     Logger.getLogger(Klijent.class.getName()).log(Level.SEVERE, null, ex);
                     response.setIsSuccess(false);
                     response.setOperation(Operations.UCITAJ_PARTIJU);
+                    response.setE(ex);
+                }
+                break;
+            case Operations.UCITAJ_REZULTATE:
+                try {
+                List<Rezultat> rezultati = KontrolerServer.getInstance().ucitajRezultate();
+                response.setIsSuccess(true);
+                response.setParameter(rezultati);
+                response.setOperation(Operations.UCITAJ_REZULTATE);
+            } catch (Exception ex) {
+                Logger.getLogger(Klijent.class.getName()).log(Level.SEVERE, null, ex);
+                response.setIsSuccess(false);
+                response.setOperation(Operations.UCITAJ_REZULTATE);
+                response.setE(ex);
+            }
+            break;
+            case Operations.PRETRAZI_REZULTATE:
+                Rezultat rezultat = (Rezultat) kz.getData();
+                try {
+                    List<Rezultat> rezultati = KontrolerServer.getInstance().pretraziRezultate(rezultat);
+                    response.setIsSuccess(true);
+                    response.setParameter(rezultati);
+                    response.setOperation(Operations.PRETRAZI_REZULTATE);
+                } catch (Exception ex) {
+                    Logger.getLogger(Klijent.class.getName()).log(Level.SEVERE, null, ex);
+                    response.setIsSuccess(false);
+                    response.setOperation(Operations.PRETRAZI_REZULTATE);
                     response.setE(ex);
                 }
                 break;

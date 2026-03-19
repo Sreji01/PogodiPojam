@@ -197,4 +197,10 @@ public class Rezultat implements GenerickiDomObj, Serializable {
 
         return rez;
     }
+
+    @Override
+    public String getDeleteCondition() {
+        return "id_partija IN (SELECT id_partija FROM partija WHERE id_korisnik = "
+                + partija.getKorisnik().getIdKorisnik() + ")";
+    }
 }

@@ -23,4 +23,5 @@ public interface GenerickiDomObj extends Serializable{
     public String getWhereCondition();
     public String getOrderCondition();
     public GenerickiDomObj getNewRecord(ResultSet rs) throws SQLException;
+    public String getDeleteCondition();
 }

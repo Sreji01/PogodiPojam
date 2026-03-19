@@ -165,4 +165,9 @@ public class Pojam implements GenerickiDomObj, Serializable {
         return new Pojam(rs.getLong("id_pojam"), rs.getString("kategorija"), rs.getString("naziv"), slikaPojma);
     }
 
+    @Override
+    public String getDeleteCondition() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }

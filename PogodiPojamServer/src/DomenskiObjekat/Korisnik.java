@@ -124,12 +124,15 @@ public class Korisnik implements GenerickiDomObj, Serializable {
 
     @Override
     public String setAtrValue() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "sifra = '" + sifra + "'";
     }
 
     @Override
     public String getPrimaryKey() {
-        return "korisnicko_ime = '" + korisnickoIme + "' AND sifra = '" + sifra + "'";
+        if (idKorisnik == null) {
+            return "korisnicko_ime = '" + korisnickoIme + "' AND sifra = '" + sifra + "'";
+        }
+        return "id_korisnik = " + idKorisnik;
     }
 
     @Override
@@ -154,7 +157,12 @@ public class Korisnik implements GenerickiDomObj, Serializable {
 
     @Override
     public GenerickiDomObj getNewRecord(ResultSet rs) throws SQLException {
-        return new Korisnik(rs.getLong("id_korisnik"), rs.getString("ime"), rs.getString("prezime"), rs.getString("korisnicko_ime"), rs.getString("sifra"));
+        return new Korisnik(rs.getLong("k.id_korisnik"), rs.getString("k.ime"), rs.getString("k.prezime"), rs.getString("k.korisnicko_ime"), rs.getString("k.sifra"));
+    }
+
+    @Override
+    public String getDeleteCondition() {
+        return "id_korisnik = " + idKorisnik;
     }
 
 }

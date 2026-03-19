@@ -20,6 +20,12 @@
               <MenuItem fx:id="pogledajRangListu" mnemonicParsing="false" text="Pogledaj rang listu" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Nalog">
+              <items>
+                <MenuItem fx:id="promeniSifru" mnemonicParsing="false" text="Promeni sifru" />
+                  <MenuItem fx:id="obrisiNalog" mnemonicParsing="false" text="Obrisi nalog" />
+              </items>
+            </Menu>
           <Menu fx:id="izlaz" mnemonicParsing="false" text="Izlaz">
             <items>
               <MenuItem fx:id="izlazIzIgre" mnemonicParsing="false" text="Izlaz iz igre" />

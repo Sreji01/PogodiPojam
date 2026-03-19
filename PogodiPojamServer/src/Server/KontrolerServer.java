@@ -7,7 +7,9 @@ package Server;
 import DomenskiObjekat.Korisnik;
 import DomenskiObjekat.Partija;
 import DomenskiObjekat.Rezultat;
+import SO.AzurirajKorisnika;
 import SO.KreirajPartiju;
+import SO.ObrisiKorisnika;
 import SO.PretraziRezultate;
 import SO.PrijaviKorisnika;
 import SO.SystemOperation;
@@ -105,6 +107,16 @@ public class KontrolerServer {
         SystemOperation so = new PretraziRezultate();
         so.templateExecute(rezultat);
         return ((PretraziRezultate) so).vratiRezultate();
+    }
+
+    void azurirajKorisnika(Korisnik korisnik) throws Exception {
+        SystemOperation so = new AzurirajKorisnika();
+        so.templateExecute(korisnik);
+    }
+
+    void obrisiKorisnika(Korisnik korisnik) throws Exception {
+        SystemOperation so = new ObrisiKorisnika();
+        so.templateExecute(korisnik);
     }
 
 }

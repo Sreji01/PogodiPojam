@@ -248,4 +248,9 @@ public class Partija implements GenerickiDomObj, Serializable {
                 rs.getInt("broj_rundi"),
                 rs.getString("status"));
     }
+
+    @Override
+    public String getDeleteCondition() {
+    return "id_korisnik = " + korisnik.getIdKorisnik();
+    }
 }

@@ -4,6 +4,7 @@
  */
 package glavnaforma;
 
+import DomenskiObjekat.Korisnik;
 import DomenskiObjekat.Partija;
 import java.io.IOException;
 import java.util.List;
@@ -50,6 +51,23 @@ public class KointrolerGuiGlavnaForma {
         });
         this.fxcon.pogledajRangListu.setOnAction(e -> {
             otvoriRangListu();
+        });
+
+        this.fxcon.promeniSifru.setOnAction(e -> {
+            try {
+                azurirajKorisnika();
+            } catch (Exception ex) {
+                Logger.getLogger(KointrolerGuiGlavnaForma.class.getName())
+                        .log(Level.SEVERE, null, ex);
+            }
+        });
+        this.fxcon.obrisiNalog.setOnAction(e -> {
+            try {
+                obrisiKorisnika();
+            } catch (Exception ex) {
+                Logger.getLogger(KointrolerGuiGlavnaForma.class.getName())
+                        .log(Level.SEVERE, null, ex);
+            }
         });
     }
 
@@ -135,7 +153,6 @@ public class KointrolerGuiGlavnaForma {
         }
 
         partija = KontrolerKlijent.getInstance().zapocniPartiju(partija);
-        System.out.println(partija);
 
         igra.JFXIgra igra = new igra.JFXIgra();
         igra.setPartija(partija);
@@ -212,6 +229,39 @@ public class KointrolerGuiGlavnaForma {
             alert.setHeaderText("Neuspesno otvaranje rang liste");
             alert.setContentText(ex.getMessage());
             alert.showAndWait();
+        }
+    }
+
+    private void azurirajKorisnika() throws Exception {
+        korisnik.JFXKorisnik korisnik = new korisnik.JFXKorisnik();
+        javafx.stage.Stage s = new javafx.stage.Stage();
+        korisnik.start(s);
+    }
+
+    private void obrisiKorisnika() throws IOException {
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Potvrda");
+        confirm.setHeaderText("Brisanje naloga");
+        confirm.setContentText("Da li ste sigurni da zelite da obrisete nalog?");
+
+        java.util.Optional<javafx.scene.control.ButtonType> result = confirm.showAndWait();
+
+        Korisnik korisnik = KontrolerKlijent.getInstance().getPrijavljeniKorisnik();
+
+        if (result.isPresent() && result.get() == javafx.scene.control.ButtonType.OK) {
+            try {
+                KontrolerKlijent.getInstance().obrisiKorisnika(korisnik);
+                
+                Alert info = new Alert(Alert.AlertType.INFORMATION);
+                info.setTitle("Uspesno");
+                info.setHeaderText(null);
+                info.setContentText("Nalog je uspesno obrisan.");
+                info.showAndWait();
+                
+                fxcon.closeStage();
+            } catch (Exception ex) {
+                Logger.getLogger(KointrolerGuiGlavnaForma.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }

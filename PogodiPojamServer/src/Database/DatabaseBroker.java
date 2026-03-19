@@ -63,7 +63,7 @@ public class DatabaseBroker implements IDBBroker {
 
     @Override
     public void delete(GenerickiDomObj gdo) throws SQLException {
-        String upit = "DELETE FROM " + gdo.getTableName() + " WHERE " + gdo.getPrimaryKey();
+        String upit = "DELETE FROM " + gdo.getTableName() + " WHERE " + gdo.getDeleteCondition();
         System.out.println(upit);
         Statement s = DatabaseConnection.getInstance().getConnection().createStatement();
         s.executeUpdate(upit);

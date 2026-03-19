@@ -189,6 +189,34 @@ public class Klijent extends Thread {
                     response.setE(ex);
                 }
                 break;
+            case Operations.AZURIRAJ_KORISNIKA:
+                Korisnik korisnikZaAzuriranje = (Korisnik) kz.getData();
+                try {
+                    KontrolerServer.getInstance().azurirajKorisnika(korisnikZaAzuriranje);
+                    response.setIsSuccess(true);
+                    response.setOperation(Operations.AZURIRAJ_KORISNIKA);
+                } catch (Exception ex) {
+                    Logger.getLogger(Klijent.class.getName()).log(Level.SEVERE, null, ex);
+                    response.setIsSuccess(false);
+                    response.setOperation(Operations.AZURIRAJ_KORISNIKA);
+                    response.setE(ex);
+                }
+                break;
+            case Operations.OBRISI_KORISNIKA:
+                Korisnik korisnikZaBrisanje = (Korisnik) kz.getData();
+                try {
+                    System.out.println(korisnikZaBrisanje);
+
+                    KontrolerServer.getInstance().obrisiKorisnika(korisnikZaBrisanje);
+                    response.setIsSuccess(true);
+                    response.setOperation(Operations.OBRISI_KORISNIKA);
+                } catch (Exception ex) {
+                    Logger.getLogger(Klijent.class.getName()).log(Level.SEVERE, null, ex);
+                    response.setIsSuccess(false);
+                    response.setOperation(Operations.OBRISI_KORISNIKA);
+                    response.setE(ex);
+                }
+                break;
             default:
                 break;
         }

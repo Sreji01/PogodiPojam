@@ -103,6 +103,7 @@ public class KontrolerKlijent {
 
     private ServerResponse sendRequest(ClientRequest req) throws Exception {
         pendingResponse = new CompletableFuture<>();
+        out.reset();
         out.writeObject(req);
         out.flush();
         return pendingResponse.get();
@@ -206,5 +207,20 @@ public class KontrolerKlijent {
         } else {
             throw so.getE();
         }
+    }
+
+    public void azurirajKorisnika(Korisnik korisnik) throws Exception {
+        ClientRequest req = new ClientRequest();
+        req.setOperation(Operations.AZURIRAJ_KORISNIKA);
+        req.setData(korisnik);
+        sendRequest(req);
+    }
+
+    public void obrisiKorisnika(Korisnik korisnik) throws Exception {
+        ClientRequest req = new ClientRequest();
+        System.out.println(korisnik);
+        req.setOperation(Operations.OBRISI_KORISNIKA);
+        req.setData(korisnik);
+        sendRequest(req);
     }
 }

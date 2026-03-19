@@ -18,4 +18,6 @@ public class Operations {
     public static final int UCITAJ_PARTIJU = 6;
     public static final int UCITAJ_REZULTATE = 7;
     public static final int PRETRAZI_REZULTATE = 8;
+    public static final int AZURIRAJ_KORISNIKA = 9;
+    public static final int OBRISI_KORISNIKA = 10;
 }

@@ -10,25 +10,15 @@ import DomenskiObjekat.Korisnik;
  *
  * @author Sreja
  */
-public class PrijaviKorisnika extends SystemOperation {
+public class AzurirajKorisnika extends SystemOperation {
     
-    private Korisnik korisnik;
-
     @Override
     protected void validate(Object entity) throws Exception {
-        if (!(entity instanceof Korisnik)) {
-            throw new Exception("Invalid entity parameter!");
-        }
     }
-
+    
     @Override
     protected void execute(Object entity) throws Exception {
-        korisnik = (Korisnik) databaseBroker.select((Korisnik)entity);
-        System.out.println(korisnik);
+        databaseBroker.update((Korisnik) entity);
     }
-
-    public Korisnik vratiKorisnika() {
-        return korisnik;
-    }
-
+    
 }

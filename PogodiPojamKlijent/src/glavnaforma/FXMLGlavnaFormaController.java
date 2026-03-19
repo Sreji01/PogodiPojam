@@ -23,6 +23,10 @@ public class FXMLGlavnaFormaController {
     @FXML
     public MenuItem izlazIzIgre;
     @FXML
+    public MenuItem promeniSifru;
+    @FXML
+    public MenuItem obrisiNalog;
+    @FXML
     public ComboBox kategorije;
     @FXML
     public TextField brojRundi;

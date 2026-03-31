@@ -6,7 +6,7 @@ package korisnik;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
 
 /**
@@ -17,11 +17,11 @@ import javafx.stage.Stage;
 public class FXMLKorisnikController {
     
     @FXML
-    public TextField trenutnaSifra;
+    public PasswordField trenutnaSifra;
     @FXML
-    public TextField novaSifra;
+    public PasswordField novaSifra;
     @FXML
-    public TextField ponoviNovuSifru;
+    public PasswordField ponoviNovuSifru;
     @FXML
     public Button zapamtiBtn;
     @FXML

@@ -57,63 +57,49 @@ public class KontrolerGuiRangLista {
 
     private void pretraziRezultate() throws IOException, Exception {
         String kategorija = fxcon.kategorije.getValue();
-        String brojRundiTekst = fxcon.brojRundi.getText().trim();
+        int brojRundi = fxcon.getBrojRundi();
 
-        if (kategorija == null && brojRundiTekst.isEmpty()) {
+        if (kategorija == null && brojRundi == -1) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Upozorenje");
             alert.setHeaderText(null);
-            alert.setContentText("Morate uneti barem jedan kriterijum pretrage!\nOdaberite kategoriju ili unesite broj rundi.");
+            alert.setContentText("Morate uneti barem jedan kriterijum pretrage!\nOdaberite kategoriju ili izaberite broj rundi.");
             alert.showAndWait();
             return;
         }
 
-        int brojRundi = 0;
-        if (!brojRundiTekst.isEmpty()) {
-            try {
-                brojRundi = Integer.parseInt(brojRundiTekst);
-            } catch (NumberFormatException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Greska");
-                alert.setHeaderText(null);
-                alert.setContentText("Broj rundi mora biti ceo broj!");
-                alert.showAndWait();
-                return;
-            }
-        }
-
         Partija partija = new Partija();
         partija.setOdabranaKategorija(kategorija);
-        partija.setBrojRundi(brojRundi);
+        partija.setBrojRundi(brojRundi == -1 ? 0 : brojRundi);
+
         Rezultat rezultat = new Rezultat();
         rezultat.setPartija(partija);
 
         List<Rezultat> lista = KontrolerKlijent.getInstance().pretraziRezultate(rezultat);
         lista.sort((a, b) -> Integer.compare(b.getUkupanBrojPoena(), a.getUkupanBrojPoena()));
-
         fxcon.rezultati.getItems().clear();
 
         if (lista.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Nema rezultata");
             alert.setHeaderText(null);
-            alert.setContentText("Nisu pronadjeni rezultati za zadate kriterijume pretrage.");
+            alert.setContentText("Rezultati nisu pronadjeni");
             alert.showAndWait();
             return;
         }
 
         fxcon.rezultati.getItems().addAll(lista);
-
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Pretraga uspesna");
         alert.setHeaderText(null);
-        alert.setContentText("Pronadjeno " + lista.size() + " rezultat(a).");
+        alert.setContentText("Rezultati su pronadjeni");
         alert.showAndWait();
     }
 
     private void restartujPolja() {
         ucitajRezultate();
         fxcon.kategorije.setValue(null);
-        fxcon.brojRundi.setText("");
+        fxcon.rundi5.setSelected(false);
+        fxcon.rundi10.setSelected(false);
     }
 }

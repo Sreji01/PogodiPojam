@@ -1,52 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="626.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="glavnaforma.FXMLGlavnaFormaController">
-   <children>
-      <MenuBar layoutY="1.0">
-        <menus>
-          <Menu fx:id="rezultati" mnemonicParsing="false" text="Rezultati">
-            <items>
-              <MenuItem fx:id="pogledajRangListu" mnemonicParsing="false" text="Pogledaj rang listu" />
-            </items>
-          </Menu>
-            <Menu mnemonicParsing="false" text="Nalog">
-              <items>
-                <MenuItem fx:id="promeniSifru" mnemonicParsing="false" text="Promeni sifru" />
-                  <MenuItem fx:id="obrisiNalog" mnemonicParsing="false" text="Obrisi nalog" />
-              </items>
-            </Menu>
-          <Menu fx:id="izlaz" mnemonicParsing="false" text="Izlaz">
-            <items>
-              <MenuItem fx:id="izlazIzIgre" mnemonicParsing="false" text="Izlaz iz igre" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-      <TableView fx:id="partije" layoutX="42.0" layoutY="158.0" prefHeight="200.0" prefWidth="405.0">
-        <columns>
-          <TableColumn fx:id="colNaziv" prefWidth="100.0" text="Naziv" />
-          <TableColumn fx:id="colKategorija" prefWidth="100.0" text="Kategorija" />
-          <TableColumn fx:id="colBrojRundi" prefWidth="100.0" text="Broj rundi" />
-          <TableColumn fx:id="colStatus" prefWidth="100.0" text="Status" />
-        </columns>
-      </TableView>
-      <ComboBox fx:id="kategorije" layoutX="193.0" layoutY="51.0" prefWidth="150.0" />
-      <Label layoutX="92.0" layoutY="55.0" text="Kategorija:" />
-      <Label layoutX="92.0" layoutY="106.0" text="Broj rundi:" />
-      <TextField fx:id="brojRundi" layoutX="193.0" layoutY="102.0" />
-      <Button fx:id="kreirajPartijuBtn" layoutX="413.0" layoutY="77.0" mnemonicParsing="false" text="Kreiraj partiju" />
-      <Button fx:id="zapocniPartijuBtn" layoutX="479.0" layoutY="200.0" mnemonicParsing="false" text="Zapocni partiju" />
-      <Button fx:id="detaljiPartijeBtn" layoutX="483.0" layoutY="265.0" mnemonicParsing="false" text="Detalji partije" />
-   </children>
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="626.0"
+            styleClass="backgroundimg"
+            stylesheets="@../CSS/stylesheet.css"
+            xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="glavnaforma.FXMLGlavnaFormaController">
+    <children>
+        <MenuBar layoutY="1.0">
+            <menus>
+                <Menu fx:id="rezultati" mnemonicParsing="false" text="Rezultati">
+                    <items>
+                        <MenuItem fx:id="pogledajRangListu" mnemonicParsing="false" text="Pogledaj rang listu" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Nalog">
+                    <items>
+                        <MenuItem fx:id="promeniSifru" mnemonicParsing="false" text="Promeni sifru" />
+                        <MenuItem fx:id="obrisiNalog" mnemonicParsing="false" text="Obrisi nalog" />
+                    </items>
+                </Menu>
+                <Menu fx:id="izlaz" mnemonicParsing="false" text="Izlaz">
+                    <items>
+                        <MenuItem fx:id="izlazIzIgre" mnemonicParsing="false" text="Izlaz iz igre" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <TableView fx:id="partije" layoutX="42.0" layoutY="158.0" prefHeight="200.0" prefWidth="405.0">
+            <columns>
+                <TableColumn fx:id="colNaziv" prefWidth="100.0" text="Naziv" />
+                <TableColumn fx:id="colKategorija" prefWidth="100.0" text="Kategorija" />
+                <TableColumn fx:id="colBrojRundi" prefWidth="100.0" text="Broj rundi" />
+                <TableColumn fx:id="colStatus" prefWidth="100.0" text="Status" />
+            </columns>
+        </TableView>
+        <ComboBox fx:id="kategorije" layoutX="193.0" layoutY="51.0" prefWidth="150.0" />
+        <Label layoutX="92.0" layoutY="55.0" text="Kategorija:" style="-fx-font-weight: bold;" />
+        <Label layoutX="92.0" layoutY="106.0" text="Broj rundi:" style="-fx-font-weight: bold;" />
+        <RadioButton fx:id="rundi5" layoutX="193.0" layoutY="104.0" text="5" style="-fx-font-weight: bold;">
+            <toggleGroup>
+                <ToggleGroup fx:id="brojRundiGrupa" />
+            </toggleGroup>
+        </RadioButton>
+        <RadioButton fx:id="rundi10" layoutX="240.0" layoutY="104.0" text="10" style="-fx-font-weight: bold;" toggleGroup="$brojRundiGrupa" />
+        <Button fx:id="kreirajPartijuBtn" layoutX="413.0" layoutY="77.0" mnemonicParsing="false" text="Kreiraj partiju" />
+        <Button fx:id="zapocniPartijuBtn" layoutX="479.0" layoutY="200.0" mnemonicParsing="false" text="Zapocni partiju" />
+        <Button fx:id="detaljiPartijeBtn" layoutX="483.0" layoutY="265.0" mnemonicParsing="false" text="Detalji partije" />
+    </children>
 </AnchorPane>

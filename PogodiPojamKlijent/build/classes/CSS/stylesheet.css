@@ -1,4 +1,6 @@
 .backgroundimg {
-    -fx-background-image: url("../Slike/guessthewordbackground.jpg");
-    -fx-background-size: 100% 100%;
+    -fx-background-image: url("/Slike/words.jpg");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
 }

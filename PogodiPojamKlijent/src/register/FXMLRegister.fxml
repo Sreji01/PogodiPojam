@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="324.0" prefWidth="381.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="register.FXMLRegisterController">
+   <children>
+      <Label layoutX="102.0" layoutY="55.0" text="Ime:" />
+      <Label layoutX="80.0" layoutY="101.0" text="Prezime:" />
+      <Label layoutX="49.0" layoutY="151.0" text="Korisnicko ime:" />
+      <Label layoutX="100.0" layoutY="199.0" text="Sifra:" />
+      <TextField fx:id="ime" layoutX="155.0" layoutY="51.0" />
+      <TextField fx:id="prezime" layoutX="155.0" layoutY="97.0" />
+      <TextField fx:id="korisnickoIme" layoutX="155.0" layoutY="147.0" />
+      <Button fx:id="registrujKorisnikaBtn" layoutX="135.0" layoutY="255.0" mnemonicParsing="false" text="Registruj se" />
+      <PasswordField fx:id="sifra" layoutX="156.0" layoutY="195.0" />
+   </children>
+</AnchorPane>

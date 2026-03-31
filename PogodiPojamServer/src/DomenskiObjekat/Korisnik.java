@@ -114,12 +114,12 @@ public class Korisnik implements GenerickiDomObj, Serializable {
 
     @Override
     public String getColumnsForInsert() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "ime, prezime, korisnicko_ime, sifra";
     }
 
     @Override
     public String getParamsForInsert() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "'" + ime + "', '" + prezime + "', '" + korisnickoIme + "', '" + sifra + "'";
     }
 
     @Override

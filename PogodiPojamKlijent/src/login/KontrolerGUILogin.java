@@ -5,6 +5,8 @@
 package login;
 
 import DomenskiObjekat.Korisnik;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import kontroler.KontrolerKlijent;
@@ -20,7 +22,7 @@ public class KontrolerGUILogin {
     public KontrolerGUILogin(FXMLLoginController fxcon) throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         this.fxcon = fxcon;
         this.fxcon.prijavaBtn.setOnAction(e -> prijaviKorisnika(this.fxcon.korisnickoIme.getText(), this.fxcon.sifra.getText()));
-
+        this.fxcon.registrujSe.setOnAction(e -> otvoriRegistraciju());
     }
 
     public void poruka(String poruka) {
@@ -32,31 +34,45 @@ public class KontrolerGUILogin {
     }
 
     public void prijaviKorisnika(String korisnickoIme, String sifra) {
-    try {
-        Korisnik korisnik = KontrolerKlijent.getInstance().prijaviKorisnika(korisnickoIme, sifra);
+        try {
+            Korisnik korisnik = KontrolerKlijent.getInstance().prijaviKorisnika(korisnickoIme, sifra);
 
-        Alert info = new Alert(Alert.AlertType.INFORMATION);
-        info.setTitle("Uspešna prijava");
-        info.setHeaderText(null);
-        info.setContentText("Korisnik je uspešno prijavljen!");
-        info.showAndWait();
+            Alert info = new Alert(Alert.AlertType.INFORMATION);
+            info.setTitle("Usepsna prijava");
+            info.setHeaderText(null);
+            info.setContentText("Korisnik je prijavljen");
+            info.showAndWait();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Greska pri prijavi");
+            alert.setHeaderText(null);
+            alert.setContentText("Ne moze da se prijavi korisnik");
+            alert.showAndWait();
 
-        glavnaforma.JFXGlavnaForma glavnaForma = new glavnaforma.JFXGlavnaForma();
-        Stage s = new Stage();
-        glavnaForma.setKorisnik(korisnik);
-        glavnaForma.start(s);
+            glavnaforma.JFXGlavnaForma glavnaForma = new glavnaforma.JFXGlavnaForma();
+            Stage s = new Stage();
+            glavnaForma.setKorisnik(korisnik);
+            glavnaForma.start(s);
 
-        this.fxcon.closeStage();
+            this.fxcon.closeStage();
 
-    } catch (Exception ex) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Greška pri prijavi");
-        alert.setHeaderText(null);
-        alert.setContentText("Korisnik sa ovim kredencijalima ne postoji ili je već ulogovan.");
-        alert.showAndWait();
-
-        ex.printStackTrace();
+        } catch (Exception ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Greska pri prijavi");
+            alert.setHeaderText(null);
+            alert.setContentText("Ne moze da se prijavi korisnik");
+            alert.showAndWait();
+            ex.printStackTrace();
+        }
     }
-}
+
+    private void otvoriRegistraciju() {
+        try {
+            register.JFXRegister register = new register.JFXRegister();
+            Stage s = new Stage();
+            register.start(s);
+        } catch (Exception ex) {
+            Logger.getLogger(KontrolerGUILogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 }

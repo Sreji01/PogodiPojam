@@ -2,15 +2,27 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="294.0" prefWidth="490.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.FXMLLoginController">
-   <children>
-      <TextField fx:id="korisnickoIme" layoutX="222.0" layoutY="80.0" />
-      <Label layoutX="68.0" layoutY="80.0" text="Korisnicko ime:" />
-      <Label layoutX="121.0" layoutY="133.0" text="Sifra:" />
-      <TextField fx:id="sifra" layoutX="222.0" layoutY="133.0" />
-      <Button fx:id="prijavaBtn" layoutX="193.0" layoutY="191.0" mnemonicParsing="false" text="Prijava" />
-   </children>
+<AnchorPane id="AnchorPane" prefHeight="294.0" prefWidth="490.0" styleClass="backgroundimg" stylesheets="@../CSS/stylesheet.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.FXMLLoginController">
+    <children>
+        <TextField fx:id="korisnickoIme" layoutX="222.0" layoutY="80.0" />
+        <Label layoutX="68.0" layoutY="80.0" style="-fx-font-weight: bold;" text="Korisnicko ime:" />
+        <Label layoutX="121.0" layoutY="133.0" style="-fx-font-weight: bold;" text="Sifra:" />
+        <TextField fx:id="sifra" layoutX="222.0" layoutY="133.0" />
+        <Button fx:id="prijavaBtn" layoutX="193.0" layoutY="191.0" mnemonicParsing="false" text="Prijava" />
+      <MenuBar layoutX="2.0" layoutY="2.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Nemas nalog?">
+            <items>
+              <MenuItem fx:id="registrujSe" mnemonicParsing="false" text="Registruj se" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+    </children>
 </AnchorPane>

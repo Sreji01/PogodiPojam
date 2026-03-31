@@ -157,14 +157,14 @@ public class KontrolerGUIIgra {
 
             if (uspesno) {
                 krajAlert.setContentText(
-                        "Cestitamo! Pogodili ste sve pojmove!\n"
+                        "Partija je zaversena\n"
                         + "Ukupno ostvarenih poena: " + ukupnoPoena + "\n"
                         + "Ukupno pokusaja: " + ukupnoPokusaja + "\n"
                         + "Vreme: " + fxcon.tajmer.getText()
                 );
             } else {
                 krajAlert.setContentText(
-                        "Partija prekinuta.\n"
+                        "Partija je zavrsena.\n"
                         + "Ukupno ostvarenih poena: " + ukupnoPoena + "\n"
                         + "Ukupno pokusaja: " + ukupnoPokusaja + "\n"
                         + "Vreme: " + fxcon.tajmer.getText()
@@ -172,6 +172,12 @@ public class KontrolerGUIIgra {
             }
 
             krajAlert.showAndWait();
+
+            Alert alert1 = new Alert(Alert.AlertType.ERROR);
+            alert1.setTitle("Greska");
+            alert1.setHeaderText(null);
+            alert1.setContentText("Ne moze da se zavrsi partija");
+            alert1.showAndWait();
             try {
                 JFXGlavnaForma glavnaForma = new JFXGlavnaForma();
                 glavnaForma.setKorisnik(fxcon.getPartija().getKorisnik());

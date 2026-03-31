@@ -85,41 +85,36 @@ public class KointrolerGuiGlavnaForma {
     }
 
     private void kreirajPartiju() throws Exception {
-        Partija partija = new Partija();
-        if (fxcon.brojRundi.getText().equals("") || fxcon.kategorije.getValue() == null) {
+        if (fxcon.rundi5.isSelected() == false && fxcon.rundi10.isSelected() == false || fxcon.kategorije.getValue() == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Upozorenje");
             alert.setHeaderText(null);
-            alert.setContentText("Morate unteri broj rundi i izabrati zeljenu kategoriju pojmova!");
-            alert.showAndWait();
-        }
-
-        int brojRundi;
-        try {
-            brojRundi = Integer.parseInt(fxcon.brojRundi.getText());
-        } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Upozorenje");
-            alert.setHeaderText(null);
-            alert.setContentText("Broj rundi mora biti ceo broj!");
+            alert.setContentText("Morate izabrati broj rundi i izabrati zeljenu kategoriju pojmova!");
             alert.showAndWait();
             return;
         }
 
+        int brojRundi = fxcon.getBrojRundi();
+
+        Partija partija = new Partija();
         partija.setKorisnik(KontrolerKlijent.getInstance().getPrijavljeniKorisnik());
         partija.setBrojRundi(brojRundi);
         partija.setOdabranaKategorija((String) fxcon.kategorije.getValue());
         partija.setNazivPartije(generisiNazivPartije());
         partija.setStatus("Kreirana");
-
         partija = KontrolerKlijent.getInstance().kreirajPartiju(partija);
         fxcon.dodajPartijuUTabelu(partija);
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Nova igra");
         alert.setHeaderText(null);
-        alert.setContentText("Nova partija je uspesno kreirana!");
+        alert.setContentText("Partija je kreirana");
         alert.showAndWait();
+        Alert alert1 = new Alert(Alert.AlertType.ERROR);
+        alert1.setTitle("Greska");
+        alert1.setHeaderText(null);
+        alert1.setContentText("Ne moze da se kreira partija");
+        alert1.showAndWait();
     }
 
     private String generisiNazivPartije() {
@@ -133,7 +128,6 @@ public class KointrolerGuiGlavnaForma {
     private void zapocniPartiju() throws Exception {
         Partija partija = fxcon.getSelektovanaPartija();
         System.out.println(partija);
-
         if (partija == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Upozorenje");
@@ -142,7 +136,6 @@ public class KointrolerGuiGlavnaForma {
             alert.showAndWait();
             return;
         }
-
         if (!partija.getStatus().equals("Kreirana")) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Upozorenje");
@@ -151,8 +144,19 @@ public class KointrolerGuiGlavnaForma {
             alert.showAndWait();
             return;
         }
-
         partija = KontrolerKlijent.getInstance().zapocniPartiju(partija);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Partija zapoceta");
+        alert.setHeaderText(null);
+        alert.setContentText("Partija je zapoceta");
+        alert.showAndWait();
+
+        Alert alert1 = new Alert(Alert.AlertType.ERROR);
+        alert1.setTitle("Greska");
+        alert1.setHeaderText(null);
+        alert1.setContentText("Ne moze da se zapocne partija");
+        alert1.showAndWait();
 
         igra.JFXIgra igra = new igra.JFXIgra();
         igra.setPartija(partija);
@@ -250,14 +254,19 @@ public class KointrolerGuiGlavnaForma {
 
         if (result.isPresent() && result.get() == javafx.scene.control.ButtonType.OK) {
             try {
-                KontrolerKlijent.getInstance().obrisiKorisnika(korisnik);
-                
+                //KontrolerKlijent.getInstance().obrisiKorisnika(korisnik);
+
                 Alert info = new Alert(Alert.AlertType.INFORMATION);
                 info.setTitle("Uspesno");
                 info.setHeaderText(null);
-                info.setContentText("Nalog je uspesno obrisan.");
+                info.setContentText("Korisnik je obrisan.");
                 info.showAndWait();
-                
+                Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                alert1.setTitle("Greska");
+                alert1.setHeaderText(null);
+                alert1.setContentText("Ne moze da se obrise korisnik");
+                alert1.showAndWait();
+
                 fxcon.closeStage();
             } catch (Exception ex) {
                 Logger.getLogger(KointrolerGuiGlavnaForma.class.getName()).log(Level.SEVERE, null, ex);

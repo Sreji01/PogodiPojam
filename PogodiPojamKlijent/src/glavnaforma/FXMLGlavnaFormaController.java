@@ -1,19 +1,18 @@
 package glavnaforma;
-
 import DomenskiObjekat.Partija;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class FXMLGlavnaFormaController {
-
     @FXML
     public Menu rezultati;
     @FXML
@@ -29,7 +28,11 @@ public class FXMLGlavnaFormaController {
     @FXML
     public ComboBox kategorije;
     @FXML
-    public TextField brojRundi;
+    public RadioButton rundi5;
+    @FXML
+    public RadioButton rundi10;
+    @FXML
+    public ToggleGroup brojRundiGrupa;
     @FXML
     public Button kreirajPartijuBtn;
     @FXML
@@ -64,9 +67,13 @@ public class FXMLGlavnaFormaController {
         kngui = new KointrolerGuiGlavnaForma(this);
     }
 
+    public int getBrojRundi() {
+        return rundi5.isSelected() ? 5 : 10;
+    }
+
     public void dodajPartijuUTabelu(Partija partija) {
-    partije.getItems().add(0, partija);
-}
+        partije.getItems().add(0, partija);
+    }
 
     public Partija getSelektovanaPartija() {
         return partije.getSelectionModel().getSelectedItem();

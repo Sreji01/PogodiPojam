@@ -21,9 +21,8 @@ public class KontrolerGUIKorisnik {
 
     public KontrolerGUIKorisnik(FXMLKorisnikController fxcon) {
         this.fxcon = fxcon;
-
         this.fxcon.zapamtiBtn.setOnAction(e -> azurirajKorisnika());
-
+        this.fxcon.odustaniBtn.setOnAction(e -> fxcon.closeStage());
     }
 
     private void azurirajKorisnika() {
@@ -59,19 +58,28 @@ public class KontrolerGUIKorisnik {
                 alert.showAndWait();
                 return;
             }
-            
+
             ulogovaniKorisnik.setSifra(novaSifra);
             KontrolerKlijent.getInstance().azurirajKorisnika(ulogovaniKorisnik);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Uspesno");
             alert.setHeaderText(null);
-            alert.setContentText("Sifra je uspesno promenjena!");
+            alert.setContentText("Korisnik je promenjen");
             alert.showAndWait();
+            Alert alert1 = new Alert(Alert.AlertType.ERROR);
+            alert1.setTitle("Greska");
+            alert1.setHeaderText(null);
+            alert1.setContentText("Ne moze da se promeni korisnik");
+            alert1.showAndWait();
 
         } catch (IOException ex) {
             Logger.getLogger(KontrolerGUIKorisnik.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(KontrolerGUIKorisnik.class.getName()).log(Level.SEVERE, null, ex);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Greska");
+            alert.setHeaderText(null);
+            alert.setContentText("Ne moze da se promeni korisnik");
+            alert.showAndWait();
         }
     }
 }

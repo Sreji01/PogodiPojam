@@ -172,7 +172,7 @@ public class Partija implements GenerickiDomObj, Serializable {
         if (vremeZavrsetka == null) {
             return "vreme_pocetka = '" + LocalDateTime.now().format(formatter) + "'";
         }
-        return "vreme_zavrsetka = '" + LocalDateTime.now().format(formatter) + "', status = '" + status + "', id_rezultat = " + rezultat.getIdRezultat();
+        return "vreme_zavrsetka = '" + LocalDateTime.now().format(formatter) + "', status = '" + status + "'";
     }
 
     @Override
@@ -188,12 +188,7 @@ public class Partija implements GenerickiDomObj, Serializable {
     @Override
     public String join() {
         if (status != null) {
-            if (status.equals("Zavrsena")) {
-                return "JOIN korisnik k ON pa.id_korisnik = k.id_korisnik JOIN rezultat r ON pa.id_rezultat = r.id_rezultat";
-            }
-            if (odabranaKategorija != null && brojRundi != 0) {
-                return "JOIN korisnik k ON pa.id_korisnik = k.id_korisnik";
-            }
+            return "JOIN korisnik k ON pa.id_korisnik = k.id_korisnik";
         }
         return "";
     }
@@ -227,8 +222,7 @@ public class Partija implements GenerickiDomObj, Serializable {
                         rs.getString("pa.status"),
                         new Korisnik(rs.getLong("k.id_korisnik"), rs.getString("k.ime"),
                                 rs.getString("k.prezime"), rs.getString("k.korisnicko_ime"),
-                                rs.getString("k.sifra")), new Rezultat(rs.getLong("r.id_rezultat"), rs.getInt("r.ukupan_broj_poena"),
-                                rs.getInt("r.ukupan_broj_pokusaja"), rs.getInt("r.ukupno_provedeno_vreme"), this));
+                                rs.getString("k.sifra")), null);
             }
             return new Partija(
                     rs.getLong("pa.id_partija"),
@@ -251,6 +245,6 @@ public class Partija implements GenerickiDomObj, Serializable {
 
     @Override
     public String getDeleteCondition() {
-    return "id_korisnik = " + korisnik.getIdKorisnik();
+        return "id_korisnik = " + korisnik.getIdKorisnik();
     }
 }
